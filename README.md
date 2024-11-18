@@ -4,7 +4,7 @@
 
 Welcome to **The Pentest Maze of Babel**, a place where knowledge about penetration testing, Capture The Flag (CTF) challenges, and cybersecurity practices is organized and shared. This GitBook is a personal repository of my journey in the world of pentesting, documenting everything I learn as I navigate the complexities of cybersecurity, particularly in **web security** 🌐 and **Active Directory** 🖥️ exploitation.
 
-My name is **Felix Billieres** 👋, and I am a Junior Penetration Tester with a passion for solving security challenges and learning how to break things in a responsible way. I am currently a student at **École 2600** 🎓, where I continue to deepen my skills in the fascinating world of ethical hacking 🛡️.
+My name is **Felix Billieres** 👋, and I am a Junior Penetration Tester with a passion for solving security challenges and learning how to break things in a responsible way. I am currently a student at **École 2600** 🎓, where I continue to deepen my skills in the  world of ethical hacking 🛡️.
 
 ***
 
@@ -41,4 +41,4 @@ Welcome to the **Maze of Babel**. 🚀
 
 Felix Billieres\
 Junior Pentester | Web Security Enthusiast 🌐 | AD Explorer 🖥️ | CTF Player 🏆\
-École 2600 🎓
+École 2600 🎓 & Phreaks2600
