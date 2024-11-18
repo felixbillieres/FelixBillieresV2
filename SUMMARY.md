@@ -19,4 +19,4 @@
 * [🕸️ Web](ctf/web/README.md)
   * [🗿 From 0 to Chad](ctf/web/from-0-to-chad/README.md)
     * [Very Easy](ctf/web/from-0-to-chad/very-easy/README.md)
-      * [Page 3](ctf/web/from-0-to-chad/very-easy/page-3.md)
+      * [Unholy Union](ctf/web/from-0-to-chad/very-easy/unholy-union.md)
