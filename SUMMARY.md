@@ -2,10 +2,6 @@
 
 * [🏛️ The Pentest Maze of Babel](README.md)
 
-## 🧠 Active Directory
-
-* [Page 1](active-directory/page-1.md)
-
 ## 🕸️ Web-app
 
 * [🛢️ SQL Injections](web-app/sql-injections/README.md)
@@ -21,4 +17,6 @@
   * [🗿 From 0 to Chad](ctf/web/from-0-to-chad/README.md)
     * [Very Easy](ctf/web/from-0-to-chad/very-easy/README.md)
       * [Unholy Union](ctf/web/from-0-to-chad/very-easy/unholy-union.md)
+      * [CandyVault](ctf/web/from-0-to-chad/very-easy/candyvault.md)
+      * [Cursed Secret Party](ctf/web/from-0-to-chad/very-easy/cursed-secret-party.md)
       * [Juggling facts](ctf/web/from-0-to-chad/very-easy/juggling-facts.md)
