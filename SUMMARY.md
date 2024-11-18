@@ -10,6 +10,7 @@
 * [💉 Command Injection](web-app/command-injection/README.md)
   * [👀 Detection & Exploitation](web-app/command-injection/detection-and-exploitation.md)
 * [🆔 IDOR (Insecure Direct Object Reference)](web-app/idor-insecure-direct-object-reference.md)
+* [Session Security](web-app/session-security.md)
 
 ## 🏅 CTF
 
