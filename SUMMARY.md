@@ -21,3 +21,6 @@
       * [CandyVault](ctf/web/from-0-to-chad/very-easy/candyvault.md)
       * [Cursed Secret Party](ctf/web/from-0-to-chad/very-easy/cursed-secret-party.md)
       * [Juggling facts](ctf/web/from-0-to-chad/very-easy/juggling-facts.md)
+    * [Easy](ctf/web/from-0-to-chad/easy/README.md)
+      * [petpet rcbee](ctf/web/from-0-to-chad/easy/petpet-rcbee.md)
+      * [Toxic](ctf/web/from-0-to-chad/easy/toxic.md)
