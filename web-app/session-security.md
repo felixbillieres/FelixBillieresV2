@@ -1,4 +1,4 @@
-# Session Security
+# 🫀 Session Security
 
 #### Session Security and Advanced Session Hijacking Exploits
 

@@ -10,7 +10,12 @@
 * [💉 Command Injection](web-app/command-injection/README.md)
   * [👀 Detection & Exploitation](web-app/command-injection/detection-and-exploitation.md)
 * [🆔 IDOR (Insecure Direct Object Reference)](web-app/idor-insecure-direct-object-reference.md)
-* [Session Security](web-app/session-security.md)
+* [🫀 Session Security](web-app/session-security.md)
+* [🛢️ Server-side Attacks](web-app/server-side-attacks/README.md)
+  * [👀 XSLT](web-app/server-side-attacks/xslt.md)
+  * [👀 SSTI](web-app/server-side-attacks/ssti.md)
+  * [👀 SSRF](web-app/server-side-attacks/ssrf.md)
+  * [Page](web-app/server-side-attacks/page.md)
 
 ## 🏅 CTF
 
