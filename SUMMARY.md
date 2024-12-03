@@ -15,7 +15,7 @@
   * [👀 XSLT](web-app/server-side-attacks/xslt.md)
   * [👀 SSTI](web-app/server-side-attacks/ssti.md)
   * [👀 SSRF](web-app/server-side-attacks/ssrf.md)
-  * [Page](web-app/server-side-attacks/page.md)
+  * [👀 SSI](web-app/server-side-attacks/ssi.md)
 
 ## 🏅 CTF
 
