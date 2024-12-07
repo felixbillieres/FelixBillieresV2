@@ -1,6 +1,6 @@
 # Table of contents
 
-* [🏛️ The Pentest Maze of Babel](README.md)
+* [⁉️ Whoami](README.md)
 
 ## 🕸️ Web-app
 
