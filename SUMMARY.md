@@ -2,6 +2,10 @@
 
 * [⁉️ Whoami](README.md)
 
+## 🌳 Active Directory
+
+* [🧠 Active Directory: Interview Prep Handbook](active-directory/active-directory-interview-prep-handbook.md)
+
 ## 🕸️ Web-app
 
 * [🛢️ SQL Injections](web-app/sql-injections/README.md)
