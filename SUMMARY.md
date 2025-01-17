@@ -33,3 +33,7 @@
     * [Easy](ctf/web/from-0-to-chad/easy/README.md)
       * [petpet rcbee](ctf/web/from-0-to-chad/easy/petpet-rcbee.md)
       * [Toxic](ctf/web/from-0-to-chad/easy/toxic.md)
+  * [💥 YesWeHack Dojo](ctf/web/yeswehack-dojo/README.md)
+    * [Challenge of the month](ctf/web/yeswehack-dojo/challenge-of-the-month/README.md)
+      * [#1](ctf/web/yeswehack-dojo/challenge-of-the-month/1.md)
+      * [#2](ctf/web/yeswehack-dojo/challenge-of-the-month/2.md)
