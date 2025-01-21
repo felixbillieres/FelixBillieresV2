@@ -34,6 +34,7 @@
       * [petpet rcbee](ctf/web/from-0-to-chad/easy/petpet-rcbee.md)
       * [Toxic](ctf/web/from-0-to-chad/easy/toxic.md)
       * [Pentest Notes](ctf/web/from-0-to-chad/easy/pentest-notes.md)
+      * [baby interdimensional internet](ctf/web/from-0-to-chad/easy/baby-interdimensional-internet.md)
   * [💥 YesWeHack Dojo](ctf/web/yeswehack-dojo/README.md)
     * [Challenge of the month](ctf/web/yeswehack-dojo/challenge-of-the-month/README.md)
       * [#1](ctf/web/yeswehack-dojo/challenge-of-the-month/1.md)
