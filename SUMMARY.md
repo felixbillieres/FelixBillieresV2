@@ -43,6 +43,7 @@
       * [Flag Command](ctf/web/hack-the-box/cyber-apocalypse-2024/flag-command.md)
       * [TimeKORP](ctf/web/hack-the-box/cyber-apocalypse-2024/timekorp.md)
       * [KORP Terminal](ctf/web/hack-the-box/cyber-apocalypse-2024/korp-terminal.md)
+      * [Labyrinth Linguist](ctf/web/hack-the-box/cyber-apocalypse-2024/labyrinth-linguist.md)
   * [💥 YesWeHack Dojo](ctf/web/yeswehack-dojo/README.md)
     * [Challenge of the month](ctf/web/yeswehack-dojo/challenge-of-the-month/README.md)
       * [#1](ctf/web/yeswehack-dojo/challenge-of-the-month/1.md)
