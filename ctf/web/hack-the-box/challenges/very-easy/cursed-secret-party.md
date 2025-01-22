@@ -2,15 +2,15 @@
 
 We start on this web page:
 
-<figure><img src="../../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
 
 We capture the request and see that it looks like this:
 
-<figure><img src="../../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
 
 In the response we can see a CSP, so we head to [https://csp-evaluator.withgoogle.com/](https://csp-evaluator.withgoogle.com/) and look to see if the CSP is safe:
 
-<figure><img src="../../../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
 
 the&#x20;
 
@@ -62,8 +62,8 @@ const visit = async () => {
 ```
 
 the syntax to create a jsDeliver file is [https://cdn.jsdelivr.net/gh/\<USERNAME>/\<REPO>@\<BRANCH>/\<PATH\_TO\_FILE>\
-](https://cdn.jsdelivr.net/gh/%3CUSERNAME%3E/%3CREPO%3E@%3CBRANCH%3E/%3CPATH\_TO\_FILE%3E) so i adapt it to my repo:
+](https://cdn.jsdelivr.net/gh/%3CUSERNAME%3E/%3CREPO%3E@%3CBRANCH%3E/%3CPATH_TO_FILE%3E) so i adapt it to my repo:
 
 [https://cdn.jsdelivr.net/gh/felixbillieres/HTBjsdelivryexploit@main/test.js](https://cdn.jsdelivr.net/gh/felixbillieres/HTBjsdelivryexploit@main/test.js)-- -
 
-<figure><img src="../../../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
