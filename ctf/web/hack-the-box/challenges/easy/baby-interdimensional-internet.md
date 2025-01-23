@@ -6,7 +6,7 @@ So we start off with a simple page that retrieves random numbers when we refresh
 
 When looking at the source code we see that there is a hidden directory, /debug that we can maybe use?
 
-<figure><img src="../../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The /debug is a flask app and we can read the source code:
 
