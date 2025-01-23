@@ -9,11 +9,11 @@ description: >-
 
 So when we go and look at the web service we come accross a Tornado list with some Ips, a status set to active/inactiv and some features such as updating status or report ip:
 
-<figure><img src="../../../../../.gitbook/assets/image (16) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (16) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 After looking at the features i go and read the source code of the application and spot the main details that pop to my eye:
 
-<figure><img src="../../../../../.gitbook/assets/image (17) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (17) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../../../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
 
