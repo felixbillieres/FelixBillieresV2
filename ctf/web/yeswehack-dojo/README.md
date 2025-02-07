@@ -1,2 +1,0 @@
-# 💥 YesWeHack Dojo
-

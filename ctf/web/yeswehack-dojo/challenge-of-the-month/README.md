@@ -1,2 +1,0 @@
-# Challenge of the month
-

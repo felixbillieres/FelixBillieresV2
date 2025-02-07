@@ -51,7 +51,10 @@
     * [🧟 Cyber Apocalypse CTF 2022](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/README.md)
       * [Amidst Us](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/amidst-us.md)
       * [Kryptos Support](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/kryptos-support.md)
-  * [💥 YesWeHack Dojo](ctf/web/yeswehack-dojo/README.md)
-    * [Challenge of the month](ctf/web/yeswehack-dojo/challenge-of-the-month/README.md)
-      * [#1](ctf/web/yeswehack-dojo/challenge-of-the-month/1.md)
-      * [#2](ctf/web/yeswehack-dojo/challenge-of-the-month/2.md)
+
+## 🧑‍🎓 student
+
+* [🦈 OSCP](student/oscp/README.md)
+  * [🐲 Linux](student/oscp/linux/README.md)
+    * [Fired](student/oscp/linux/fired.md)
+  * [🪟 Windows](student/oscp/windows.md)
