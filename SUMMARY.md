@@ -57,4 +57,6 @@
 * [🦈 OSCP](student/oscp/README.md)
   * [🐲 Linux](student/oscp/linux/README.md)
     * [Fired](student/oscp/linux/fired.md)
+    * [BlackGate](student/oscp/linux/blackgate.md)
+    * [Clue](student/oscp/linux/clue.md)
   * [🪟 Windows](student/oscp/windows.md)

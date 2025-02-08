@@ -2,7 +2,7 @@
 
 We begin by landing on a simple login page. Upon inspecting the page's source code, we notice that it’s part of a Flask web application and uses MongoDB as its backend database. This provides an interesting starting point for our exploration, as we can start analyzing the request behavior to look for vulnerabilities.
 
-<figure><img src="../../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 In the `app.py` file, we can see two routes that catch our attention. These routes handle the user login functionality, and by analyzing them, we gain insight into how the application processes login requests. Specifically, we observe the following behavior:
 
