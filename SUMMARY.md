@@ -52,13 +52,14 @@
       * [Amidst Us](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/amidst-us.md)
       * [Kryptos Support](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/kryptos-support.md)
 
-## 🧑‍🎓 student
+## 🧑‍🎓 Certifications
 
-* [🦈 OSCP](student/oscp/README.md)
-  * [🐲 Linux](student/oscp/linux/README.md)
-    * [Fired](student/oscp/linux/fired.md)
-    * [BlackGate](student/oscp/linux/blackgate.md)
-    * [Clue](student/oscp/linux/clue.md)
-    * [Jordak](student/oscp/linux/jordak.md)
-    * [Scrutiny](student/oscp/linux/scrutiny.md)
-  * [🪟 Windows](student/oscp/windows.md)
+* [🦈 OSCP](certifications/oscp/README.md)
+  * [🐲 Linux](certifications/oscp/linux/README.md)
+    * [Fired](certifications/oscp/linux/fired.md)
+    * [BlackGate](certifications/oscp/linux/blackgate.md)
+    * [Clue](certifications/oscp/linux/clue.md)
+    * [Jordak](certifications/oscp/linux/jordak.md)
+    * [Scrutiny](certifications/oscp/linux/scrutiny.md)
+    * [Extplorer](certifications/oscp/linux/extplorer.md)
+  * [🪟 Windows](certifications/oscp/windows.md)
