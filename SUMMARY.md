@@ -62,4 +62,5 @@
     * [Jordak](certifications/oscp/linux/jordak.md)
     * [Scrutiny](certifications/oscp/linux/scrutiny.md)
     * [Extplorer](certifications/oscp/linux/extplorer.md)
+    * [press](certifications/oscp/linux/press.md)
   * [🪟 Windows](certifications/oscp/windows.md)
