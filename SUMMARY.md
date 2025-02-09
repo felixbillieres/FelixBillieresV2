@@ -59,4 +59,6 @@
     * [Fired](student/oscp/linux/fired.md)
     * [BlackGate](student/oscp/linux/blackgate.md)
     * [Clue](student/oscp/linux/clue.md)
+    * [Jordak](student/oscp/linux/jordak.md)
+    * [Scrutiny](student/oscp/linux/scrutiny.md)
   * [🪟 Windows](student/oscp/windows.md)
