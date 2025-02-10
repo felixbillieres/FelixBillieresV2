@@ -68,3 +68,4 @@
   * [🪟 Windows](certifications/oscp/windows.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)
     * [ProStore](certifications/oscp/post-oscp/prostore.md)
+    * [Upsploit](certifications/oscp/post-oscp/upsploit.md)
