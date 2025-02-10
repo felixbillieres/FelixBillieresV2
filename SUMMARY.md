@@ -64,4 +64,5 @@
     * [Extplorer](certifications/oscp/linux/extplorer.md)
     * [press](certifications/oscp/linux/press.md)
     * [RubyDome](certifications/oscp/linux/rubydome.md)
+    * [Flu](certifications/oscp/linux/flu.md)
   * [🪟 Windows](certifications/oscp/windows.md)

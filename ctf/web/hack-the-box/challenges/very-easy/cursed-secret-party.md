@@ -2,11 +2,11 @@
 
 We start on this web page:
 
-<figure><img src="../../../../../.gitbook/assets/image (9) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (9) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We capture the request and see that it looks like this:
 
-<figure><img src="../../../../../.gitbook/assets/image (10) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (10) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 In the response we can see a CSP, so we head to [https://csp-evaluator.withgoogle.com/](https://csp-evaluator.withgoogle.com/) and look to see if the CSP is safe:
 
