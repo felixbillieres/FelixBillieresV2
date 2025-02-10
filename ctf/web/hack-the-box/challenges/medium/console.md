@@ -2,7 +2,7 @@
 
 So when we launch the challenge and go on the webpage we are greeted with a php info page with something that stands out:
 
-<figure><img src="../../../../../.gitbook/assets/image (23) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (23) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 after looking up what was php-console we can see this repository:
 
