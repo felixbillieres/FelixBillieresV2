@@ -1,0 +1,27 @@
+# pyLoader
+
+I start off by scanning for open ports:
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+We can see a version in the header that seems interesting:
+
+<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+that fills every aspect of this box, let's try to get an RCE ->
+
+<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+ok so maybe we can't see the output, so i tried a reverse shell but it still did not work, so i took a step back and continued enumeration with default creds:
+
+<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+and with those creds i'm able to log in:
+
+<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+
+In the info section we find interesting informations:
+
+<figure><img src="../../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+
+So i tried exploiting an issue on pyLoad 0.5.0
