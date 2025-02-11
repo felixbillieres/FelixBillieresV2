@@ -66,6 +66,7 @@
     * [RubyDome](certifications/oscp/linux/rubydome.md)
     * [Flu](certifications/oscp/linux/flu.md)
     * [pyLoader](certifications/oscp/linux/pyloader.md)
+    * [Zipper](certifications/oscp/linux/zipper.md)
   * [🪟 Windows](certifications/oscp/windows.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)
     * [ProStore](certifications/oscp/post-oscp/prostore.md)
