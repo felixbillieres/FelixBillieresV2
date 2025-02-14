@@ -70,6 +70,7 @@
     * [BitForge](certifications/oscp/linux/bitforge.md)
     * [Pelican](certifications/oscp/linux/pelican.md)
     * [Ochima](certifications/oscp/linux/ochima.md)
+    * [vmdak](certifications/oscp/linux/vmdak.md)
   * [🪟 Windows](certifications/oscp/windows.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)
     * [ProStore](certifications/oscp/post-oscp/prostore.md)
