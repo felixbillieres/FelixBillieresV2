@@ -73,6 +73,7 @@
     * [vmdak](certifications/oscp/linux/vmdak.md)
   * [🪟 Windows](certifications/oscp/windows/README.md)
     * [Algernon](certifications/oscp/windows/algernon.md)
+    * [Internal](certifications/oscp/windows/internal.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)
     * [ProStore](certifications/oscp/post-oscp/prostore.md)
     * [Upsploit](certifications/oscp/post-oscp/upsploit.md)
