@@ -79,3 +79,4 @@
     * [Upsploit](certifications/oscp/post-oscp/upsploit.md)
   * [🌴 Active Directory](certifications/oscp/active-directory/README.md)
     * [Hutch](certifications/oscp/active-directory/hutch.md)
+    * [Vault](certifications/oscp/active-directory/vault.md)

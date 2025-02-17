@@ -2,7 +2,7 @@
 
 So we are greeted with a website with some input box, we send a message and see that admin will review ticket:
 
-<figure><img src="../../../../.gitbook/assets/image (8) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (8) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So maybe some sort of XSS where we have to steal cookie?
 
