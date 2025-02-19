@@ -24,7 +24,7 @@ Identifying SSTI vulnerabilities is similar to detecting **SQL injection** or **
 * **Twig (PHP)**: `{{ ... }}`
 * **Velocity (Java)**: `${ ... }`
 
-<figure><img src="../../.gitbook/assets/image (15) (1) (1) (1) (1) (1).png" alt=""><figcaption><p><a href="https://portswigger.net/web-security/server-side-template-injection"><strong>https://portswigger.net/web-security/server-side-template-injection</strong></a></p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (15) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p><a href="https://portswigger.net/web-security/server-side-template-injection"><strong>https://portswigger.net/web-security/server-side-template-injection</strong></a></p></figcaption></figure>
 
 #### **Testing for SSTI:**
 

