@@ -84,6 +84,7 @@
     * [Hutch](certifications/oscp/active-directory/hutch.md)
     * [Vault](certifications/oscp/active-directory/vault.md)
     * [Resourced](certifications/oscp/active-directory/resourced.md)
+    * [📦 Fuse](certifications/oscp/active-directory/fuse.md)
     * [📦 Resolute](certifications/oscp/active-directory/resolute.md)
     * [📦 Timelapse](certifications/oscp/active-directory/timelapse.md)
     * [📦 Active](certifications/oscp/active-directory/active.md)

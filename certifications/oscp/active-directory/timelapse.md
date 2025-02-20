@@ -2,21 +2,21 @@
 
 I start off by scanning open ports:
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
 first i add timelaps.htb to my hosts file
 
 Then i try conecting though RPCCLIENT anonymous but got denied, then SMB shares enum:
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I download everything in the share and see some interesting stuff:
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 There is a password to unzip the backup zip so i use zip2john to get the hash:
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 john  --wordlist=/usr/share/wordlists/rockyou.txt ziphash.txt 
@@ -24,7 +24,7 @@ john  --wordlist=/usr/share/wordlists/rockyou.txt ziphash.txt
 
 then i get my hash, i'm able to unzip and see the pfx file but there is also a password:
 
-<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption><p>thuglegacy</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption><p>thuglegacy</p></figcaption></figure>
 
 Then to extract the keys ->
 
