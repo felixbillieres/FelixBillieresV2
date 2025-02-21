@@ -88,3 +88,6 @@
     * [📦 Resolute](certifications/oscp/active-directory/resolute.md)
     * [📦 Timelapse](certifications/oscp/active-directory/timelapse.md)
     * [📦 Active](certifications/oscp/active-directory/active.md)
+  * [🫀 Challenge Machines](certifications/oscp/challenge-machines/README.md)
+    * [OSCP A](certifications/oscp/challenge-machines/oscp-a/README.md)
+      * [Active Directory](certifications/oscp/challenge-machines/oscp-a/active-directory.md)
