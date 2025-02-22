@@ -6,7 +6,7 @@ I start off by scanning for open ports:
 
 I start by enumerating ftp anonymous login and try directory bruteforcing on the http instances and come accross this smartermail instance on port 9998 ->
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I go back to the ftp anonymous download eveyrthing and look at some files  in the Logs folder and see some administrative logs:
 

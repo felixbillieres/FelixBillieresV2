@@ -6,7 +6,7 @@ We start off with a weird page where we can select a color that does not seem to
 
 When clicking in the spaceship at the center of the website we can click on it and upload a file:
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 If i upload a php reverseshell.php i get blocked but if i submit a reverseshell.php.jpg it seems to send at least a request:
 

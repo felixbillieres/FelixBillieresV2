@@ -6,7 +6,7 @@ I start off by scanning open ports and quickly see that this is a AD, with domai
 
 Then i download everything in that share:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I end up finding a groups.xml file:
 
