@@ -76,6 +76,7 @@
     * [Algernon](certifications/oscp/windows/algernon.md)
     * [Internal](certifications/oscp/windows/internal.md)
     * [Nickel](certifications/oscp/windows/nickel.md)
+    * [Certified](certifications/oscp/windows/certified.md)
     * [📦 Administrator](certifications/oscp/windows/administrator.md)
     * [MedJed](certifications/oscp/windows/medjed.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)

