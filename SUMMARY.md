@@ -93,3 +93,6 @@
   * [🫀 Challenge Machines](certifications/oscp/challenge-machines/README.md)
     * [OSCP A](certifications/oscp/challenge-machines/oscp-a/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-a/active-directory.md)
+      * [Crystal Standalone](certifications/oscp/challenge-machines/oscp-a/crystal-standalone.md)
+      * [Hermes Standalone](certifications/oscp/challenge-machines/oscp-a/hermes-standalone.md)
+      * [Aero Standalone](certifications/oscp/challenge-machines/oscp-a/aero-standalone.md)

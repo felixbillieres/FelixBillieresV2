@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # OSCP A
 
 Here is my scope:
