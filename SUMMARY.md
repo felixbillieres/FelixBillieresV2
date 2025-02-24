@@ -86,6 +86,7 @@
     * [Resourced](certifications/oscp/active-directory/resourced.md)
     * [📦 Fuse](certifications/oscp/active-directory/fuse.md)
     * [📦 Escape](certifications/oscp/active-directory/escape.md)
+    * [📦 Search](certifications/oscp/active-directory/search.md)
     * [📦 Resolute](certifications/oscp/active-directory/resolute.md)
     * [📦 Timelapse](certifications/oscp/active-directory/timelapse.md)
     * [📦 Active](certifications/oscp/active-directory/active.md)

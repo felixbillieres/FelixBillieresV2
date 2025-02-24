@@ -68,10 +68,11 @@ Rest later
 
 <summary>📂 SMB Enumeration</summary>
 
-*   **List SMB Shares**
+*   **List SMB Shares and users**
 
     ```bash
-    crackmapexec smb <IP> --shares -u <USER> -p <PASSWORD>
+    crackmapexec smb <IP> --shares -u <USER> -p <PASSWORD> --users
+    # command to get clean users.txt -> awk '/SMB/{if (NF>=5) print $5}' > users.txt
     ```
 *   **Brute force RID for user enumeration**
 

@@ -8,7 +8,7 @@ Eric.Wallows / EricLikesRunning800
 
 I start by enumerating for SMB shares:
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 We quickly see that we can connect through evil-winrm and that the user eric.wallows has SeImpersonatePrivilege
 
