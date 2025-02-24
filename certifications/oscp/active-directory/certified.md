@@ -2,11 +2,11 @@
 description: 'Username: judith.mader Password: judith09'
 ---
 
-# Certified
+# 📦 Certified
 
 We start off by scanning for open ports:
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then i looked at the different shares and downloaded everything:
 
@@ -16,7 +16,7 @@ nxc smb 10.129.231.186 -u judith.mader -p judith09 -M spider_plus -o DOWNLOAD_FL
 
 But nothing interesting so i went and looked at rpcclient and found some usernames:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I put this in a list and launch my bloodhound collector to get e better look of the domain:
 
@@ -24,7 +24,7 @@ I put this in a list and launch my bloodhound collector to get e better look of 
 bloodhound-python -u judith.mader -p 'judith09' -c All -d certified.htb -ns 10.129.231.186
 ```
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 neo4j console
@@ -33,11 +33,11 @@ neo4j console
 
 After uploading all of the jsons to bloodhound and marking judith as owned we can see she has writeowner on Managment@certified.htb
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 While looking at the query: Shortest Paths to High Value Targets, we start to understand we have to take control of MANAGEMENT\_SVC, the path finder was also very visual on what we need to do:
 
-<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% embed url="https://medium.com/@aslam.mahimkar/exploiting-ad-dacl-writeowner-misconfiguration-ca61fb2fcee1" %}
 
@@ -56,7 +56,7 @@ Since I have `WriteOwner`, I should **take ownership** first. This allows me to 
 bloodyAD --host 10.129.231.186 -d "certified.htb" -u "judith.mader" -p "judith09" set owner Management judith.mader
 ```
 
-<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since I **own the group**, I should **grant myself more useful permissions**. `WriteMembers` lets me **add myself** to the Management group
 
@@ -154,6 +154,6 @@ But when i try to auth i get an error and i have no idea why
 
 After talking for a bit witg a friend about my situation i learned that i needed to restore ca\_operator’s UPN and after doing that i was able to use administrator.pfx to request for a TGT and get a Hash:
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (199).png" alt=""><figcaption></figcaption></figure>
