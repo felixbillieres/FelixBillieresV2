@@ -8,7 +8,7 @@ Eric.Wallows / EricLikesRunning800
 
 I start by enumerating for SMB shares:
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We quickly see that we can connect through evil-winrm and that the user eric.wallows has SeImpersonatePrivilege
 
@@ -140,3 +140,35 @@ hashcat -m13100 websvc.hash /usr/share/wordlists/rockyou.txt
 And we confirm we have the good credentials:
 
 <figure><img src="../../../../.gitbook/assets/image (212).png" alt=""><figcaption></figcaption></figure>
+
+Then i went back and privesc to dump hashes:
+
+```
+reg save HKLM\SAM "C:\Windows\Temp\sam.save"
+reg save HKLM\SECURITY "C:\Windows\Temp\security.save"
+reg save HKLM\SYSTEM "C:\Windows\Temp\system.save"
+```
+
+was able to secretsdump&#x20;
+
+```
+impacket-secretsdump -sam 'sam.save' -security 'security.save' -system 'system.save' LOCAL 
+```
+
+<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+With the default creds i can connect to celia.almeda: via evil winrm
+
+Then i find a windows.old folder that contains in /windows/system32 a sam and system hive that i export back to my attackbox and crack:
+
+```
+impacket-secretsdump -sam SAM -system SYSTEM LOCAL
+```
+
+<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+I'm able to use pass the hash to connect as tom admin:
+
+<figure><img src="../../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+And get the proof.txt on the admin Desktop

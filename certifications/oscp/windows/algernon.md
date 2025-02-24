@@ -16,7 +16,7 @@ command to download everything in FTP:
 wget -r ftp://anonymous:password@192.168.51.65
 ```
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I thought i needed to find some creds in the logs but nothing seemed to pop out so i wen to look at some smartermail exploits ->
 
@@ -24,6 +24,6 @@ I thought i needed to find some creds in the logs but nothing seemed to pop out 
 
 I change the parameters and run the exploit and end up getting a shell:
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ok nice haha not too complicated

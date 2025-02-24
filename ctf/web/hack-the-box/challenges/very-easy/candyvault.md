@@ -2,14 +2,14 @@
 
 We begin by landing on a simple login page. Upon inspecting the page's source code, we notice that it’s part of a Flask web application and uses MongoDB as its backend database. This provides an interesting starting point for our exploration, as we can start analyzing the request behavior to look for vulnerabilities.
 
-<figure><img src="../../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 In the `app.py` file, we can see two routes that catch our attention. These routes handle the user login functionality, and by analyzing them, we gain insight into how the application processes login requests. Specifically, we observe the following behavior:
 
 * The application handles HTTP POST requests to the login form.
 * The request content type can be set as `application/json`, which is important because it hints at the way the data is processed and allows us to craft a custom request with specific payloads.
 
-<figure><img src="../../../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We verify that the application is built using Flask, which is a lightweight Python framework for web applications. Additionally, it utilizes MongoDB as its database, which is a NoSQL database. Given that MongoDB is used to store the user credentials, this opens the door to potential NoSQL injection attacks, particularly around how data is queried and validated.
 
