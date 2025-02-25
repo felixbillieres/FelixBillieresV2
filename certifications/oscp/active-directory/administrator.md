@@ -6,15 +6,15 @@ description: 'Username: Olivia Password: ichliebedich'
 
 I start off by scanning for open ports:
 
-<figure><img src="../../../.gitbook/assets/image (10) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (10) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 I quickly get a list of usernames:
 
-<figure><img src="../../../.gitbook/assets/image (11) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (11) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 And the groups on the domain:
 
-<figure><img src="../../../.gitbook/assets/image (12) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (12) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 the creds that were given to us have winrm rights so let's connect then we launch bloodhound python:
 
@@ -30,21 +30,21 @@ neo4j console
 
 while launching our bloodhound collector we see a new host that we can add to hosts ->
 
-<figure><img src="../../../.gitbook/assets/image (13) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (13) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 and i launch bloodhound without root!!
 
 I mark user olvia as owned and continue by looking at the node info of olivia and seeing she as First degree object control GenericAll over michael:
 
-<figure><img src="../../../.gitbook/assets/image (14) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (14) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 and michael has ForceChangePassword over Benjamin:
 
-<figure><img src="../../../.gitbook/assets/image (15) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (15) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 Knowing this we can install bloodyAD and abuse those rights:
 
-<figure><img src="../../../.gitbook/assets/image (16) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (16) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 ```
 bloodyAD -u "olivia" -p "ichliebedich" -d "Administrator.htb" --host "10.129.107.16" set password "Michael" "Password1"
@@ -57,11 +57,11 @@ I'll have to test this tool later on:
 
 Now we can confirm we have succesfully changed the password:
 
-<figure><img src="../../../.gitbook/assets/image (17) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (17) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 So i restart my enumeration process with these credentials and end up connecting to an FTP instance with the creds of Benjamin
 
-<figure><img src="../../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (17) (1).png" alt=""><figcaption></figcaption></figure>
 
 After googling the extension, i found the tool pwsafe2john and used it to get a hash out of this file:
 

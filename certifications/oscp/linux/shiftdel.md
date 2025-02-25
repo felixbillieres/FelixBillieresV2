@@ -2,7 +2,7 @@
 
 I start off by scanning for open ports:
 
-<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then i go and look at the webserver and see that it's running with wordpress:
 
@@ -10,7 +10,7 @@ Then i go and look at the webserver and see that it's running with wordpress:
 
 So i launch a wp-scan and find the wordpress version:
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and after googling we find some interesting stuff:
 
@@ -20,7 +20,7 @@ and after googling we find some interesting stuff:
 
 so i'm able to read files and apparently the onboarding page had everything i needed:
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>IntraPersonalVision349</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>IntraPersonalVision349</p></figcaption></figure>
 
 So i found a password but no username that i'm sure of so i went and looked at my wpscan cheat sheets and tried to find something to enumerate users&#x20;
 
@@ -28,11 +28,11 @@ So i found a password but no username that i'm sure of so i went and looked at m
 wpscan --url http://192.168.57.174 --enumerate u
 ```
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and i manage to login:
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 so there is not much going on and the account is restrictive so the only way to go must be the version exploit we found earlier ->
 
@@ -50,17 +50,17 @@ Usage:
 
 So i start off by uploading a random png to the app and editing it:
 
-<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then i reload and the website is totally screwed:
 
-<figure><img src="../../../.gitbook/assets/image (8) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and now i can curl wp-config.php without encoding:
 
-<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1).png" alt=""><figcaption><p>wordpress:ThinnerATheWaistline348</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1) (1) (1) (1).png" alt=""><figcaption><p>wordpress:ThinnerATheWaistline348</p></figcaption></figure>
 
 With this i'm able to login in the php my admin instance:
 
