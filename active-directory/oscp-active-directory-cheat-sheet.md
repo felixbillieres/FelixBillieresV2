@@ -72,7 +72,7 @@ Rest later
 
     ```bash
     crackmapexec smb <IP> --shares -u <USER> -p <PASSWORD> --users
-    # command to get clean users.txt -> awk '/SMB/{if (NF>=5) print $5}' > users.txt
+    # command to get clean users.txt -> awk '{print $5}' > users.txt
     ```
 *   **Brute force RID for user enumeration**
 

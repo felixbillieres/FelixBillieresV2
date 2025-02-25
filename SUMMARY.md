@@ -99,3 +99,5 @@
       * [Crystal Standalone](certifications/oscp/challenge-machines/oscp-a/crystal-standalone.md)
       * [Hermes Standalone](certifications/oscp/challenge-machines/oscp-a/hermes-standalone.md)
       * [Aero Standalone](certifications/oscp/challenge-machines/oscp-a/aero-standalone.md)
+    * [OSCP B](certifications/oscp/challenge-machines/oscp-b/README.md)
+      * [Active Directory](certifications/oscp/challenge-machines/oscp-b/active-directory.md)

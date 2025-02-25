@@ -2,21 +2,21 @@
 
 I start off by scanning open ports:
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 first i add timelaps.htb to my hosts file
 
 Then i try conecting though RPCCLIENT anonymous but got denied, then SMB shares enum:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I download everything in the share and see some interesting stuff:
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 There is a password to unzip the backup zip so i use zip2john to get the hash:
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 john  --wordlist=/usr/share/wordlists/rockyou.txt ziphash.txt 
@@ -24,11 +24,11 @@ john  --wordlist=/usr/share/wordlists/rockyou.txt ziphash.txt
 
 then i get my hash, i'm able to unzip and see the pfx file but there is also a password:
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>thuglegacy</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>thuglegacy</p></figcaption></figure>
 
 Then to extract the keys ->
 
-<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 #to see the content:
@@ -53,7 +53,7 @@ evil-winrm -S -i <IP> -c key.cert -k key.pem
 
 and we are able to get a foothold:
 
-<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 `gci -force .` will show hidden files in a directory
@@ -67,7 +67,7 @@ C:\Users\legacyy\Appdata\Roaming\Microsoft\Windows\Powershell\Psreadline
 
 and in that file we find a consolehost log file ->
 
-<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1).png" alt=""><figcaption><p>svc_deploy:E3R$Q62^12p7PLlC%KWaxuaV</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (7) (1) (1) (1) (1).png" alt=""><figcaption><p>svc_deploy:E3R$Q62^12p7PLlC%KWaxuaV</p></figcaption></figure>
 
 Winpeas catches this file. Now we can connect:
 
