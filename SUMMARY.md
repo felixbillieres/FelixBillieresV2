@@ -102,3 +102,15 @@
       * [Aero Standalone](certifications/oscp/challenge-machines/oscp-a/aero-standalone.md)
     * [OSCP B](certifications/oscp/challenge-machines/oscp-b/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-b/active-directory.md)
+
+## ♟️ Chess Stuff
+
+* [✅ Why This Section?](chess-stuff/why-this-section.md)
+* [👶 Chess Fundamentals](chess-stuff/chess-fundamentals.md)
+* [👐 Openings](chess-stuff/openings.md)
+* [🎯 Middlegame – Strategy & Planning](chess-stuff/middlegame-strategy-and-planning.md)
+* [🇦🇶 Middlegame – Tactics & Calculation](chess-stuff/middlegame-tactics-and-calculation.md)
+* [🔚 Endgames](chess-stuff/endgames.md)
+* [🧠 Psychology & Decision-Making](chess-stuff/psychology-and-decision-making.md)
+* [📚 Training & Study Methods](chess-stuff/training-and-study-methods.md)
+* [🔭 Model Games & Players to Study](chess-stuff/model-games-and-players-to-study.md)
