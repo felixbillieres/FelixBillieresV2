@@ -42,7 +42,7 @@ so i download this:
 
 and we're able to pop a webshell:
 
-<figure><img src="../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I tried running reverse shell commands and php and C and powershell but it was not&#x20;
 
