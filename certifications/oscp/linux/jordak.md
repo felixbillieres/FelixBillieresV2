@@ -6,7 +6,7 @@ So i start enumeration and find 2 open ports:
 
 On the webpage, we see a normal apache server webpage, and after fuzzing for a bit, we find a .git directory that redirects us to this page:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I go on internet and look for default credentials:
 

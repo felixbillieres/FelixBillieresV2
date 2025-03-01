@@ -8,7 +8,7 @@ first i add timelaps.htb to my hosts file
 
 Then i try conecting though RPCCLIENT anonymous but got denied, then SMB shares enum:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I download everything in the share and see some interesting stuff:
 
