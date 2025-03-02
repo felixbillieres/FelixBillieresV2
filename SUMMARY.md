@@ -104,6 +104,9 @@
       * [Aero Standalone](certifications/oscp/challenge-machines/oscp-a/aero-standalone.md)
     * [OSCP B](certifications/oscp/challenge-machines/oscp-b/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-b/active-directory.md)
+      * [Berlin](certifications/oscp/challenge-machines/oscp-b/berlin.md)
+      * [Page](certifications/oscp/challenge-machines/oscp-b/page.md)
+      * [Gust](certifications/oscp/challenge-machines/oscp-b/gust.md)
 
 ## ♟️ Chess Stuff
 
@@ -114,7 +117,8 @@
     * [Principles of the Opening](chess-stuff/road-to-2000-elo/openings/principles-of-the-opening.md)
     * [General Opening Theory & Key Concepts](chess-stuff/road-to-2000-elo/openings/general-opening-theory-and-key-concepts.md)
     * [Repertoire for White](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/README.md)
-      * [e4 – Open and Semi-Open Games](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/e4-open-and-semi-open-games.md)
+      * [e4 – Open and Semi-Open Games](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/e4-open-and-semi-open-games/README.md)
+        * [Double King’s Pawn (1.e4 e5):](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/e4-open-and-semi-open-games/double-kings-pawn-1.e4-e5.md)
       * [d4 – Closed & Semi-Closed Games](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/d4-closed-and-semi-closed-games.md)
       * [Flank Openings & Universal Systems](chess-stuff/road-to-2000-elo/openings/repertoire-for-white/flank-openings-and-universal-systems.md)
     * [Repertoire for Black](chess-stuff/road-to-2000-elo/openings/repertoire-for-black/README.md)

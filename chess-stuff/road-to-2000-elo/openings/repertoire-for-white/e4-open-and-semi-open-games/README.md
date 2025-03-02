@@ -18,8 +18,3 @@
   * Pirc & Modern (1.e4 d6 & 1.e4 g6)
   * Alekhine’s Defense (1.e4 Nf6)
 
-## **Double King’s Pawn (1.e4 e5):**
-
-### Ruy-Lopez: Closed, Open, and Berlin Defense
-
-<figure><img src="../../../../.gitbook/assets/image (5).png" alt=""><figcaption><p><strong>1. e4 e5 2. Nf3 Nc6 3. Bb5.</strong></p></figcaption></figure>
