@@ -5,8 +5,8 @@
 ## 🌳 Active Directory
 
 * [🧠 Active Directory: Interview Prep Handbook](active-directory/active-directory-interview-prep-handbook.md)
-* [🏅 OSCP Active Directory Cheat Sheet](active-directory/oscp-active-directory-cheat-sheet/README.md)
-  * [Pivoting for OSCP](active-directory/oscp-active-directory-cheat-sheet/pivoting-for-oscp.md)
+* [🏅 OSCP Cheat Sheet](active-directory/oscp-cheat-sheet/README.md)
+  * [Pivoting for OSCP](active-directory/oscp-cheat-sheet/pivoting-for-oscp.md)
 
 ## 🕸️ Web-app
 
