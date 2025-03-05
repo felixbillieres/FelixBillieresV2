@@ -6,6 +6,8 @@
 
 * [🧠 Active Directory: Interview Prep Handbook](active-directory/active-directory-interview-prep-handbook.md)
 * [🏅 OSCP Cheat Sheet](active-directory/oscp-cheat-sheet/README.md)
+  * [Windows Privilege Escalation - Cheat Sheet](active-directory/oscp-cheat-sheet/windows-privilege-escalation-cheat-sheet.md)
+  * [Linux Privilege Escalation - Cheat Sheet](active-directory/oscp-cheat-sheet/linux-privilege-escalation-cheat-sheet.md)
   * [Pivoting for OSCP](active-directory/oscp-cheat-sheet/pivoting-for-oscp.md)
 
 ## 🕸️ Web-app
