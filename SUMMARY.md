@@ -97,6 +97,8 @@
     * [📦 Certified](certifications/oscp/active-directory/certified.md)
   * [🫀 Challenge Machines](certifications/oscp/challenge-machines/README.md)
     * [Challenge 0 - Secura](certifications/oscp/challenge-machines/challenge-0-secura.md)
+    * [Challenge 2 - Relia](certifications/oscp/challenge-machines/challenge-2-relia/README.md)
+      * [Page 1](certifications/oscp/challenge-machines/challenge-2-relia/page-1.md)
     * [OSCP A](certifications/oscp/challenge-machines/oscp-a/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-a/active-directory.md)
       * [Crystal Standalone](certifications/oscp/challenge-machines/oscp-a/crystal-standalone.md)

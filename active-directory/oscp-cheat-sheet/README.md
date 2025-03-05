@@ -384,20 +384,45 @@ main
 
 ## 📌 Reconnaissance & Énumération
 
+First scan to do:
+
+```sh
+enum4linux <IP>
+```
+
+### 🔍 RPC Enumeration
+
+#### **Manual Commands**
+
+```sh
+#anonymous login
+rpcclient -N -U '' <IP> -c "enumdomusers" | grep -oP '(?<=user:\[)[^\]]+' > users.txt
+```
+
 ### 🔍 SMB Enumeration
 
 #### **Manual Commands (netexec)**
 
-```bash
-# Enumerate SMB shares, users, sessions, and more (including anonymous auth)
-netexec smb 10.10.10.5 -u '' -p '' --shares --sessions --users --groups --rid-brute --pass-pol --ntds --kerberos --gpo
+<pre class="language-bash"><code class="lang-bash"># Enumerate SMB shares, users, sessions, and more (including anonymous auth)
+netexec smb 192.168.56.175 -u '' -p '' --shares --users --rid-brute
 
 # List accessible shares
 netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --shares | tee shares.txt
 
 # Check for writable shares
 netexec smb 10.10.10.5 -u 'contoso\bob' -p 'Password123' --spider-share '.*' --check-write | tee writable_shares.txt
-```
+
+#grep out usernames from --users output:
+| grep -E "SMB\s+.*\s+[A-Za-z]+\.[A-Za-z]+" | awk '{print $5} > users.txt
+
+#grep sam hive hashes
+nxc smb 192.168.1.0/24 -u UserName -p 'PASSWORDHERE' --sam
+
+#grep out hashes and usernames (check if you have others, not the best grep
+<strong>grep -oP '^[^:]+:\d+:[a-f0-9]{32}:[a-f0-9]{32}' secretsdump.txt | awk -F: '{print $1}' > secretsdumpusernames.txt
+</strong>grep -oP '^[^:]+:\d+:[a-f0-9]{32}:[a-f0-9]{32}' secretsdump.txt | awk -F: '{print $4}' > secretsdumphashes.txt
+
+</code></pre>
 
 ### 🔍 LDAP Enumeration
 
