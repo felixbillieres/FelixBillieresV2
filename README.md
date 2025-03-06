@@ -14,7 +14,7 @@ If you come across anything in my work that seems incorrect or if you simply wan
 
 * [Github](https://github.com/felixbillieres)
 * [**LinkedIn**](https://www.linkedin.com/in/f%C3%A9lix-billi%C3%A8res/)
-* [**Twitter**](https://x.com/ElFelixi0)
+* [**Twitter**](https://x.com/Elliot_belt)
 
 ***
 
