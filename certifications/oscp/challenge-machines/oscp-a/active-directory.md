@@ -165,7 +165,7 @@ Then i find a windows.old folder that contains in /windows/system32 a sam and sy
 impacket-secretsdump -sam SAM -system SYSTEM LOCAL
 ```
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I'm able to use pass the hash to connect as tom admin:
 

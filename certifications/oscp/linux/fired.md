@@ -18,7 +18,7 @@ PORT     STATE SERVICE        REASON
 
 On the first service i see an admin console:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Openfire, Version: 4.7.3</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Openfire, Version: 4.7.3</p></figcaption></figure>
 
 And the version seems vulnerable to this exploit:
 
