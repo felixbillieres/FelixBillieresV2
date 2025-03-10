@@ -551,6 +551,161 @@ main
 
 </details>
 
+<details>
+
+<summary>Directory Discovery</summary>
+
+```bash
+#!/bin/bash
+
+# Couleurs
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Vérification des arguments
+if [ $# -lt 2 ]; then
+    echo -e "${RED}Usage: $0 [small|full] <IP> [PORT]${NC}"
+    echo -e "${YELLOW}Exemples:"
+    echo -e "  Mode light : $0 small 10.10.10.10"
+    echo -e "  Mode complet: $0 full 10.10.10.10 8080${NC}"
+    exit 1
+fi
+
+MODE=$1
+IP=$2
+PORT=${3:-80}
+TARGET="http://$IP:$PORT"
+SCAN_DIR="scan_directory/$IP"
+RAW_DIR="$SCAN_DIR/raw"
+RESULTS_DIR="$SCAN_DIR/results"
+
+# Configuration des extensions
+declare -A SCAN_EXTENSIONS
+if [ "$MODE" == "small" ]; then
+    SCAN_EXTENSIONS=(["php"]=1 ["txt"]=1 ["html"]=1)
+    DIRB_EXT=".php,.txt,.html"
+    GOBUSTER_EXT="php,txt,html"
+elif [ "$MODE" == "full" ]; then
+    SCAN_EXTENSIONS=(["php"]=1 ["txt"]=1 ["html"]=1 ["aspx"]=1 ["js"]=1 ["css"]=1)
+    DIRB_EXT=".php,.txt,.html,.aspx,.js,.css"
+    GOBUSTER_EXT="php,txt,html,aspx,js,css"
+else
+    echo -e "${RED}Mode invalide! Choisir 'small' ou 'full'${NC}"
+    exit 1
+fi
+
+# Vérification des outils
+check_tool() {
+    if ! command -v $1 &> /dev/null; then
+        echo -e "${RED}Erreur: $1 n'est pas installé${NC}"
+        exit 1
+    fi
+}
+
+for tool in nikto dirb gobuster feroxbuster; do
+    check_tool $tool
+done
+
+# Création de l'arborescence
+create_dirs() {
+    mkdir -p "$RAW_DIR" "$RESULTS_DIR"
+    rm -f "$RESULTS_DIR"/*.txt 2> /dev/null
+}
+
+# Fonction de scan générique
+run_scan() {
+    echo -e "\n${BLUE}[*] Lancement de $1...${NC}"
+    eval "$2"
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Erreur lors de l'exécution de $1${NC}"
+        exit 1
+    fi
+}
+
+# Traitement des résultats
+process_results() {
+    local tool=$1
+    local file=$2
+    local pattern=$3
+    
+    grep -E "$pattern" "$file" | while read -r line; do
+        path=$(echo "$line" | sed -n "s|$pattern|\1|p")
+        code=$(echo "$line" | sed -n "s|$pattern|\2|p")
+        
+        if [[ "$code" =~ ^(200|301|302|307|401|403)$ ]]; then
+            filename=$(basename "${path%%\?*}")
+            ext="${filename##*.}"
+            
+            if [[ "$ext" == "$filename" ]]; then
+                echo "$path" >> "$RESULTS_DIR/no_extension.txt"
+            elif [[ -n "${SCAN_EXTENSIONS[$ext]}" ]]; then
+                echo "$path" >> "$RESULTS_DIR/$ext.txt"
+            else
+                echo "$path" >> "$RESULTS_DIR/other.txt"
+            fi
+        fi
+    done
+}
+
+# Nettoyage des résultats
+clean_results() {
+    for file in "$RESULTS_DIR"/*; do
+        sort -u "$file" -o "$file"
+        sed -i '/^$/d' "$file"
+    done
+}
+
+# Main
+create_dirs
+
+echo -e "\n${GREEN}[+] Cible: ${YELLOW}$TARGET"
+echo -e "${GREEN}[+] Mode de scan: ${YELLOW}$MODE${NC}"
+
+# Nikto
+run_scan "Nikto" "nikto -h $IP -p $PORT -Format txt -output $RAW_DIR/nikto.txt"
+
+# Dirb
+run_scan "Dirb" "dirb $TARGET/ /usr/share/dirb/wordlists/common.txt -X \"$DIRB_EXT\" -o $RAW_DIR/dirb.txt -r -z 10"
+
+# Gobuster
+run_scan "Gobuster" "gobuster dir -u $TARGET -w /usr/share/wordlists/dirb/common.txt -x $GOBUSTER_EXT -o $RAW_DIR/gobuster.txt"
+
+# Feroxbuster
+run_scan "Feroxbuster" "feroxbuster -u $TARGET -w /usr/share/wordlists/dirb/common.txt -x $GOBUSTER_EXT -o $RAW_DIR/feroxbuster.txt --silent"
+
+# Analyse des résultats
+echo -e "\n${BLUE}[*] Analyse des résultats...${NC}"
+
+> "$RESULTS_DIR/all_paths.txt"
+
+# Traitement Nikto
+process_results "Nikto" "$RAW_DIR/nikto.txt" '^+ (.*): .*\((200|301|302|307|401|403)\)'
+
+# Traitement Dirb
+process_results "Dirb" "$RAW_DIR/dirb.txt" "^+ $TARGET(/[^ ]*) .*CODE:(200|301|302|307|401|403)"
+
+# Traitement Gobuster
+process_results "Gobuster" "$RAW_DIR/gobuster.txt" "(/[^ ]*) .*\(Status: (200|301|302|307|401|403)\)"
+
+# Traitement Feroxbuster
+process_results "Feroxbuster" "$RAW_DIR/feroxbuster.txt" "^[0-9]+.*[[:space:]](/[^ ]*) .* (200|301|302|307|401|403)"
+
+# Finalisation
+clean_results
+
+echo -e "\n${GREEN}[+] Scan terminé ! Résultats dans: ${YELLOW}$RESULTS_DIR/${NC}"
+echo -e "${BLUE}Fichiers générés:${NC}"
+ls -l "$RESULTS_DIR" | awk '{printf "• %-15s %s\n", $9, $5}'
+echo -e "\n${GREEN}Conseil OSCP:${NC} Vérifiez toujours manuellement les fichiers intéressants!"
+```
+
+</details>
+
+
+
 ## 📌 Reconnaissance & Énumération
 
 First scan to do:
@@ -697,7 +852,7 @@ snmpwalk -v2c -c public 10.10.10.5 1.3.6.1.2.1.6.13.1.3
 
 ```bash
 # Collect BloodHound data
-bloodhound-python -c All -u 'bob' -p 'Password123' -d 'contoso.local' -dc 10.10.10.5 --zip --dns-tcp --disable-pooling -o bloodhound/
+bloodhound-python -d contoso.htb -c all -u oorend -p '1GR8t@$$4u' -ns 10.10.11.231 --zip
 ```
 
 ### 🔍 Low Hanging Fruits Checks
