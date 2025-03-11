@@ -60,6 +60,7 @@
 * [🦈 OSCP](certifications/oscp/README.md)
   * [🐲 Linux](certifications/oscp/linux/README.md)
     * [Fired](certifications/oscp/linux/fired.md)
+    * [Cockpit](certifications/oscp/linux/cockpit.md)
     * [BlackGate](certifications/oscp/linux/blackgate.md)
     * [Clue](certifications/oscp/linux/clue.md)
     * [Jordak](certifications/oscp/linux/jordak.md)
