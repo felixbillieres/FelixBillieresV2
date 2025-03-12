@@ -19,6 +19,7 @@
   * [👀 Detection & Exploitation](web-app/command-injection/detection-and-exploitation.md)
 * [🆔 IDOR (Insecure Direct Object Reference)](web-app/idor-insecure-direct-object-reference.md)
 * [🫀 Session Security](web-app/session-security.md)
+* [🚪 Access control](web-app/access-control.md)
 * [🛢️ Server-side Attacks](web-app/server-side-attacks/README.md)
   * [👀 XSLT](web-app/server-side-attacks/xslt.md)
   * [👀 SSTI](web-app/server-side-attacks/ssti.md)
