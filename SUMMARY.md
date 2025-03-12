@@ -54,6 +54,8 @@
     * [🧟 Cyber Apocalypse CTF 2022](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/README.md)
       * [Amidst Us](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/amidst-us.md)
       * [Kryptos Support](ctf/web/hack-the-box/cyber-apocalypse-ctf-2022/kryptos-support.md)
+  * [PwnMe2025](ctf/web/pwnme2025/README.md)
+    * [Crackford](ctf/web/pwnme2025/crackford.md)
 
 ## 🧑‍🎓 Certifications
 
