@@ -6,11 +6,11 @@ I start off by scanning for open ports:
 
 i add the domain in my hosts file and look for anonymous access and smb shares:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The write permission on a share is rather unusual to my knowledge in those types off boxes but i already saw it during some previous stuff so i tried using responder to catch some NTML creds:
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 this is rather strange since i did not do anything, maybe something to do with the fact that i added the domain in my hosts file idk. since i won't be lucky like this every time here is a good article about abusing NTLM relay attacks:
 

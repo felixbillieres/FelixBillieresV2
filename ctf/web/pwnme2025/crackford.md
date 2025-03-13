@@ -22,15 +22,15 @@ You need to take over admin account
 
 We begin with a simple login page where we can create an account. After creating an account, we log in and discover an email that seems to be associated with the admin.
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Upon further inspection, we notice an unusual GET request being made. This link turns out to be a password reset link for our user.
 
 <figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 At this point, we hypothesize that if we can figure out how this link is generated, we might be able to create a custom link that would allow us to reset the admin's password. I attempted to use tools like CrackStation, but none of them seemed to work. Instead, I created several user accounts with different emails to observe the variations in the reset links generated for each email. Here are some examples of the links:
 
