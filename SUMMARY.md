@@ -79,6 +79,7 @@
     * [Ochima](certifications/oscp/linux/ochima.md)
     * [vmdak](certifications/oscp/linux/vmdak.md)
     * [Shiftdel](certifications/oscp/linux/shiftdel.md)
+    * [PC](certifications/oscp/linux/pc.md)
   * [🪟 Windows](certifications/oscp/windows/README.md)
     * [Algernon](certifications/oscp/windows/algernon.md)
     * [Internal](certifications/oscp/windows/internal.md)
