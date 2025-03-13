@@ -138,3 +138,28 @@ and ligolo session:
 ```
 start --tun ligolo1
 ```
+
+### **Local Service running on target**
+
+**🔹 With SSH**
+
+If you have SSH access, forward port `8000` from the target to `9999` on your local machine:
+
+```bash
+ssh -L 9999:127.0.0.1:8000 user@192.168.212.103
+```
+
+**🔹 With Chisel (No SSH Access)**
+
+1.  **Start Chisel Server** (on your machine):
+
+    ```bash
+    chisel server --reverse --port 9999
+    ```
+2.  **Start Chisel Client** (on the target machine):
+
+    ```bash
+    chisel client YOUR_IP:9999 R:9999:127.0.0.1:8000
+    ```
+
+Now, access the service at `http://127.0.0.1:9999`.&#x20;
