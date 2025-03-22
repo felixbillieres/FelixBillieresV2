@@ -90,6 +90,7 @@
     * [📦 ServMon](certifications/oscp/windows/servmon.md)
     * [MedJed](certifications/oscp/windows/medjed.md)
     * [Hepet](certifications/oscp/windows/hepet.md)
+    * [Jacko](certifications/oscp/windows/jacko.md)
   * [😡 Post OSCP](certifications/oscp/post-oscp/README.md)
     * [ProStore](certifications/oscp/post-oscp/prostore.md)
     * [Upsploit](certifications/oscp/post-oscp/upsploit.md)

