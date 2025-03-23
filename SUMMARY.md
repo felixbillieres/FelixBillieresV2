@@ -111,6 +111,7 @@
     * [Challenge 2 - Relia](certifications/oscp/challenge-machines/challenge-2-relia/README.md)
       * [Page 1](certifications/oscp/challenge-machines/challenge-2-relia/page-1.md)
     * [Challenge 8 - Poseidon](certifications/oscp/challenge-machines/challenge-8-poseidon.md)
+    * [Challenge 9 - Feast](certifications/oscp/challenge-machines/challenge-9-feast.md)
     * [OSCP A](certifications/oscp/challenge-machines/oscp-a/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-a/active-directory.md)
       * [Crystal Standalone](certifications/oscp/challenge-machines/oscp-a/crystal-standalone.md)
