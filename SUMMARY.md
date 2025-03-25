@@ -98,6 +98,7 @@
     * [Hutch](certifications/oscp/active-directory/hutch.md)
     * [Vault](certifications/oscp/active-directory/vault.md)
     * [Resourced](certifications/oscp/active-directory/resourced.md)
+    * [Nara](certifications/oscp/active-directory/nara.md)
     * [📦 Fuse](certifications/oscp/active-directory/fuse.md)
     * [📦 Escape](certifications/oscp/active-directory/escape.md)
     * [📦 Search](certifications/oscp/active-directory/search.md)
