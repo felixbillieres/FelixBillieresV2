@@ -213,3 +213,49 @@ dataUrl=http://localhost:8081/internal_admin
 ```
 
 * **Expected Behavior:** The WAF might block requests containing `localhost` or `127.0.0.1`. But if it’s configured incorrectly, SSRF could still succeed with more subtle IP obfuscation techniques (e.g., `::1` for IPv6).
+
+### **SSRF with Whitelist-Based Input Filters**
+
+When dealing with whitelist-based SSRF filters, you can bypass restrictions using various URL manipulation techniques, such as embedding credentials, URL fragments, or DNS tricks.
+
+**Embedding Credentials in the URL**
+
+You can include credentials before the hostname using the `@` character:
+
+```bash
+https://user:password@malicious-server.com
+```
+
+Some filters may only check the username portion and mistakenly allow the request while it is actually sent to `malicious-server.com`.
+
+***
+
+**Using the `#` Character for URL Fragment Manipulation**
+
+Browsers ignore everything after `#`, but some misconfigured servers might process it incorrectly:
+
+```bash
+https://malicious-server.com#trusted-site.com
+```
+
+If the filter only checks for `"trusted-site.com"`, it may allow the request, even though the actual destination is `malicious-server.com`.
+
+***
+
+**Leveraging DNS Hierarchy for Bypass**
+
+You can prepend an allowed domain inside a subdomain that you control:
+
+```bash
+https://trusted-site.com.attacker-controlled.com
+```
+
+Some filters only check for `"trusted-site.com"` at the start of the domain, allowing the request to go through.
+
+***
+
+#### **Key Takeaways**
+
+* The `@` credential trick can mislead validation systems.
+* The `#` fragment trick may cause incorrect server-side processing.
+* The FQDN trick (`sub.trusted.com.attacker.com`) can bypass weak hostname validation.
