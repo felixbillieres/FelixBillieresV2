@@ -22,7 +22,7 @@ and i manage to get in:
 
 the box is very laggy and i have to wait 5min + for one request so i will come back later
 
-<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Ok so after looking for fast5 exploit me saw that this was called Prison Management System so i looked up known exploits that could lead to code execution and saw this article:
 
@@ -30,7 +30,7 @@ Ok so after looking for fast5 exploit me saw that this was called Prison Managem
 
 So i go and create a new user:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and i capture the post request:
 

