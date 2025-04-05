@@ -96,7 +96,7 @@ and the file will be transfered
 
 Let's say we have a successfull pivot, we manage to get a shell on a machine and discover a new subnet we want to scan:
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 on our kali:
 

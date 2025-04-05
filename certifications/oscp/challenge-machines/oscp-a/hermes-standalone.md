@@ -10,7 +10,7 @@ On port 161 we discover a SNMP port open and we manage to bruteforce the passwor
 
 So after enumerating for a bit i found this program running with snmp:
 
-<figure><img src="../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (3) (1) (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 I look up exploits and find what i'm looking for:
 

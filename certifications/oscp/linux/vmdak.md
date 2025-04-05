@@ -30,7 +30,7 @@ Ok so after looking for fast5 exploit me saw that this was called Prison Managem
 
 So i go and create a new user:
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 and i capture the post request:
 

@@ -122,6 +122,7 @@
       * [Frankfurt](certifications/oscp/challenge-machines/oscp-c/frankfurt.md)
       * [AD](certifications/oscp/challenge-machines/oscp-c/ad.md)
       * [Charlie](certifications/oscp/challenge-machines/oscp-c/charlie.md)
+      * [Pascha](certifications/oscp/challenge-machines/oscp-c/pascha.md)
     * [OSCP B](certifications/oscp/challenge-machines/oscp-b/README.md)
       * [Active Directory](certifications/oscp/challenge-machines/oscp-b/active-directory.md)
       * [Berlin](certifications/oscp/challenge-machines/oscp-b/berlin.md)
